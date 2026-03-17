@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 15: Mobile-First Landing Page</title>
+    <style>
+        /* ========== MOBILE FIRST BASE STYLES (0px - 767px) ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            width: 100%;
+            padding: 0 1.5rem;
+            margin: 0 auto;
+        }
+
+        /* Typography - Mobile First */
+        h1 { font-size: 2rem; }
+        h2 { font-size: 1.75rem; }
+        h3 { font-size: 1.5rem; }
+        p { font-size: 1rem; }
+        .small-text { font-size: 0.875rem; }
+
+        /* Header & Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hamburger Menu - Mobile */
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background: #667eea;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 2rem;
+            list-style: none;
+            transform: translateY(-150%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            z-index: 999;
+        }
+
+        .nav-menu.active {
+            transform: translateY(0);
+        }
+
+        .nav-menu li {
+            margin-bottom: 1rem;
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 0.75rem;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .nav-menu a:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0 4rem;
+            background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+            text-align: center;
+        }
+
+        .hero h1 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102,126,234,0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+        }
+
+        .features h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .feature-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #666;
+        }
+
+        /* About Section */
+        .about {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .about-text h2 {
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .about-image img {
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 4rem 0;
+        }
+
+        .stats-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .pricing h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .pricing-card.popular {
+            transform: scale(1.05);
+            border: 2px solid #667eea;
+            z-index: 1;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+        }
+
+        .pricing-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            padding: 0.5rem 0;
+            color: #666;
+            border-bottom: 1px solid #eee;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 4rem 0;
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .testimonial-slider {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .author-info h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            color: #999;
+            font-size: 0.875rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-section .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2d3748;
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #cbd5e0;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #4a5568;
+            text-align: center;
+            color: #cbd5e0;
+        }
+
+        /* ========== TABLET STYLES (min-width: 768px) ========== */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 720px;
+                padding: 0 2rem;
+            }
+
+            /* Typography */
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.75rem; }
+
+            /* Navigation */
+            .menu-toggle {
+                display: none;
+            }
+
+            .nav-menu {
+                position: static;
+                transform: none;
+                display: flex;
+                gap: 2rem;
+                padding: 0;
+                box-shadow: none;
+                background: transparent;
+            }
+
+            .nav-menu li {
+                margin-bottom: 0;
+            }
+
+            .nav-menu a {
+                padding: 0.5rem 1rem;
+            }
+
+            .nav-menu a:hover {
+                background: #667eea20;
+                color: #667eea;
+            }
+
+            /* Hero */
+            .hero {
+                padding: 8rem 0 6rem;
+            }
+
+            .cta-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .btn {
+                min-width: 200px;
+            }
+
+            /* Features */
+            .feature-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            /* About */
+            .about-content {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                align-items: center;
+            }
+
+            /* Stats */
+            .stats-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            /* Pricing */
+            .pricing-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .pricing-card.popular {
+                transform: scale(1.05);
+            }
+
+            /* Testimonials */
+            .testimonial-slider {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            /* Footer */
+            .footer-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        /* ========== DESKTOP STYLES (min-width: 1024px) ========== */
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 960px;
+            }
+
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2.25rem; }
+            h3 { font-size: 2rem; }
+
+            .feature-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .pricing-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .testimonial-slider {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* ========== LARGE DESKTOP STYLES (min-width: 1200px) ========== */
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1140px;
+            }
+
+            h1 { font-size: 3.5rem; }
+        }
+
+        /* ========== EXTRA LARGE (min-width: 1400px) ========== */
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1320px;
+            }
+        }
+
+        /* Progressive Enhancement Features */
+        @supports (display: grid) {
+            .feature-grid,
+            .stats-grid,
+            .pricing-grid,
+            .testimonial-slider,
+            .footer-grid {
+                display: grid;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* High Contrast */
+        @media (prefers-contrast: high) {
+            .btn-primary {
+                border: 2px solid black;
+            }
+        }
+
+        /* Responsive Images with srcset (in HTML) */
+        .responsive-img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">BrandName</div>
+            
+            <button class="menu-toggle" onclick="document.querySelector('.nav-menu').classList.toggle('active')">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Build Beautiful Websites<br>with Mobile-First Approach</h1>
+            <p>Create responsive websites that look great on every device. Start with mobile and scale up.</p>
+            
+            <!-- Responsive image with srcset -->
+            <picture>
+                <source media="(min-width: 1024px)" srcset="https://via.placeholder.com/800x400">
+                <source media="(min-width: 768px)" srcset="https://via.placeholder.com/600x300">
+                <img src="https://via.placeholder.com/400x200" alt="Hero image" style="width: 100%; border-radius: 10px; margin: 2rem 0;">
+            </picture>
+
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">Get Started</a>
+                <a href="#" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Why Choose Us</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Mobile First</h3>
+                    <p>Designed for mobile devices first, then enhanced for larger screens.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast Performance</h3>
+                    <p>Optimized for speed with minimal code and progressive enhancement.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Modern Design</h3>
+                    <p>Clean, contemporary design that adapts to any screen size.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Our Approach</h2>
+                    <p>We believe in building for mobile first. With over 60% of web traffic coming from mobile devices, it's essential to ensure your website works perfectly on small screens before enhancing for desktop.</p>
+                    <p>Our mobile-first strategy ensures faster loading times, better user experience, and improved SEO rankings across all devices.</p>
+                    <a href="#" class="btn btn-primary">Learn More</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://via.placeholder.com/600x400" alt="About us" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Happy Customers</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Projects</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">95%</span>
+                    <span class="stat-label">Satisfaction</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Support</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2>Simple, Transparent Pricing</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Basic</h3>
+                    <div class="price">$19<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>5 Projects</li>
+                        <li>10GB Storage</li>
+                        <li>Basic Support</li>
+                        <li>Email Integration</li>
+                    </ul>
+                    <a href="#" class="btn btn-secondary">Choose Plan</a>
+                </div>
+
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3>Pro</h3>
+                    <div class="price">$49<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>Unlimited Projects</li>
+                        <li>100GB Storage</li>
+                        <li>Priority Support</li>
+                        <li>Advanced Analytics</li>
+                        <li>Custom Domain</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Choose Plan</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">$99<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>Unlimited Everything</li>
+                        <li>1TB Storage</li>
+                        <li>24/7 Phone Support</li>
+                        <li>Custom Solutions</li>
+                        <li>API Access</li>
+                    </ul>
+                    <a href="#" class="btn btn-secondary">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>What Our Clients Say</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "This platform transformed how we build websites. The mobile-first approach ensures our sites look great everywhere."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JD</div>
+                        <div class="author-info">
+                            <h4>John Doe</h4>
+                            <p>CEO, TechStart</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "Incredible performance and beautiful design. Our mobile traffic has increased by 40% since switching."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JS</div>
+                        <div class="author-info">
+                            <h4>Jane Smith</h4>
+                            <p>Marketing Director</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "The best decision we made for our web presence. Support is amazing and the platform is rock solid."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MW</div>
+                        <div class="author-info">
+                            <h4>Mike Wilson</h4>
+                            <p>Product Manager</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Get Started?</h2>
+            <p>Join thousands of satisfied customers and build your mobile-first website today.</p>
+            <a href="#" class="btn btn-primary">Start Free Trial</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">API</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 MobileFirst. All rights reserved. Built with mobile-first approach.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Responsive Features Summary -->
+    <div style="position: fixed; bottom: 20px; left: 20px; background: #333; color: white; padding: 10px; border-radius: 5px; font-size: 0.875rem; z-index: 1000;" id="breakpoint-indicator">
+        <span id="current-size">Mobile</span>
+    </div>
+
+    <script>
+        // Update breakpoint indicator
+        function updateBreakpoint() {
+            const width = window.innerWidth;
+            const indicator = document.getElementById('current-size');
+            
+            if (width < 768) {
+                indicator.textContent = 'Mobile (< 768px)';
+            } else if (width < 1024) {
+                indicator.textContent = 'Tablet (768px - 1024px)';
+            } else if (width < 1200) {
+                indicator.textContent = 'Desktop (1024px - 1200px)';
+            } else {
+                indicator.textContent = 'Large Desktop (1200px+)';
+            }
+        }
+
+        window.addEventListener('resize', updateBreakpoint);
+        window.addEventListener('load', updateBreakpoint);
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-menu').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

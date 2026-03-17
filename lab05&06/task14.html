@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 14: Responsive Data Table</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #444;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        /* Table Controls */
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f5f5f5;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .search-box input {
+            border: none;
+            background: none;
+            outline: none;
+            padding: 5px;
+            width: 250px;
+        }
+
+        .entries-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .entries-selector select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        /* Standard Table */
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            padding: 15px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Action Buttons */
+        .action-btns {
+            display: flex;
+            gap: 5px;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-edit {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-view {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        /* Card Layout for Mobile */
+        .card-table {
+            display: none;
+        }
+
+        /* Responsive Table - Method 1: Horizontal Scroll */
+        .scroll-table {
+            min-width: 100%;
+        }
+
+        /* Responsive Table - Method 2: Card Layout */
+        @media (max-width: 768px) {
+            .standard-table {
+                display: none;
+            }
+
+            .card-table {
+                display: block;
+            }
+
+            .card-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 20px;
+            }
+
+            .data-card {
+                background: white;
+                border-radius: 10px;
+                padding: 20px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid #667eea;
+            }
+
+            .card-field {
+                display: flex;
+                margin-bottom: 10px;
+                padding: 8px;
+                background: #f8f9fa;
+                border-radius: 5px;
+            }
+
+            .card-field .label {
+                font-weight: 600;
+                width: 100px;
+                color: #666;
+            }
+
+            .card-field .value {
+                flex: 1;
+            }
+
+            .card-actions {
+                display: flex;
+                gap: 10px;
+                margin-top: 15px;
+                padding-top: 15px;
+                border-top: 1px solid #eee;
+            }
+
+            .card-actions button {
+                flex: 1;
+                padding: 8px;
+            }
+        }
+
+        /* Responsive Table - Method 3: Stacked Layout */
+        @media (max-width: 480px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Alternative: Stacked table */
+            .stacked-table {
+                display: block;
+            }
+
+            .stacked-table table,
+            .stacked-table thead,
+            .stacked-table tbody,
+            .stacked-table th,
+            .stacked-table td,
+            .stacked-table tr {
+                display: block;
+            }
+
+            .stacked-table thead {
+                display: none;
+            }
+
+            .stacked-table tr {
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 10px;
+            }
+
+            .stacked-table td {
+                display: flex;
+                padding: 8px;
+                border: none;
+                border-bottom: 1px solid #eee;
+            }
+
+            .stacked-table td:last-child {
+                border-bottom: none;
+            }
+
+            .stacked-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                width: 120px;
+                min-width: 120px;
+                color: #666;
+            }
+        }
+
+        /* Advanced Table Features */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pagination-btn {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pagination-btn:hover,
+        .pagination-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        /* Sortable Table */
+        th.sortable {
+            cursor: pointer;
+            position: relative;
+            padding-right: 25px;
+        }
+
+        th.sortable::after {
+            content: '↕️';
+            position: absolute;
+            right: 8px;
+            opacity: 0.5;
+        }
+
+        th.sortable.asc::after {
+            content: '↑';
+            opacity: 1;
+        }
+
+        th.sortable.desc::after {
+            content: '↓';
+            opacity: 1;
+        }
+
+        /* Table Foot */
+        tfoot {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        /* Striped Rows */
+        .striped tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        /* Borderless Table */
+        .borderless td,
+        .borderless th {
+            border: none;
+        }
+
+        /* Compact Table */
+        .compact td,
+        .compact th {
+            padding: 8px 10px;
+        }
+
+        /* Table Info */
+        .table-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Breakpoint Indicators */
+        .breakpoint-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            z-index: 1000;
+        }
+
+        .breakpoint-indicator::before {
+            content: "Current: ";
+        }
+
+        @media (max-width: 480px) {
+            .breakpoint-indicator::after {
+                content: "Mobile (< 480px) - Stacked Layout";
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .breakpoint-indicator::after {
+                content: "Tablet (481px - 768px) - Card Layout";
+            }
+        }
+
+        @media (min-width: 769px) {
+            .breakpoint-indicator::after {
+                content: "Desktop (769px+) - Standard Table";
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Responsive Data Table Demonstration</h1>
+
+        <!-- Method 1: Standard Table with Horizontal Scroll -->
+        <div class="section">
+            <h2>1. Standard Table (Desktop) → Card Layout (Tablet) → Stacked (Mobile)</h2>
+            
+            <div class="table-controls">
+                <div class="entries-selector">
+                    <label>Show</label>
+                    <select>
+                        <option>10</option>
+                        <option>25</option>
+                        <option>50</option>
+                        <option>100</option>
+                    </select>
+                    <span>entries</span>
+                </div>
+                
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Search...">
+                </div>
+            </div>
+
+            <!-- Standard Table (Desktop) -->
+            <div class="table-container standard-table">
+                <table class="striped">
+                    <thead>
+                        <tr>
+                            <th class="sortable">ID</th>
+                            <th class="sortable">Customer Name</th>
+                            <th class="sortable">Email</th>
+                            <th class="sortable">Phone</th>
+                            <th class="sortable">Orders</th>
+                            <th class="sortable">Total Spent</th>
+                            <th class="sortable">Last Order</th>
+                            <th class="sortable">Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#001</td>
+                            <td>John Smith</td>
+                            <td>john.smith@email.com</td>
+                            <td>(555) 123-4567</td>
+                            <td>12</td>
+                            <td>$1,234.56</td>
+                            <td>2026-03-15</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="action-btn btn-view">👁️</button>
+                                    <button class="action-btn btn-edit">✏️</button>
+                                    <button class="action-btn btn-delete">🗑️</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#002</td>
+                            <td>Sarah Johnson</td>
+                            <td>sarah.j@email.com</td>
+                            <td>(555) 234-5678</td>
+                            <td>8</td>
+                            <td>$892.30</td>
+                            <td>2026-03-14</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="action-btn btn-view">👁️</button>
+                                    <button class="action-btn btn-edit">✏️</button>
+                                    <button class="action-btn btn-delete">🗑️</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#003</td>
+                            <td>Michael Chen</td>
+                            <td>m.chen@email.com</td>
+                            <td>(555) 345-6789</td>
+                            <td>5</td>
+                            <td>$456.75</td>
+                            <td>2026-03-10</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="action-btn btn-view">👁️</button>
+                                    <button class="action-btn btn-edit">✏️</button>
+                                    <button class="action-btn btn-delete">🗑️</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#004</td>
+                            <td>Emma Wilson</td>
+                            <td>emma.w@email.com</td>
+                            <td>(555) 456-7890</td>
+                            <td>15</td>
+                            <td>$2,145.90</td>
+                            <td>2026-03-16</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="action-btn btn-view">👁️</button>
+                                    <button class="action-btn btn-edit">✏️</button>
+                                    <button class="action-btn btn-delete">🗑️</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#005</td>
+                            <td>James Brown</td>
+                            <td>james.b@email.com</td>
+                            <td>(555) 567-8901</td>
+                            <td>3</td>
+                            <td>$234.50</td>
+                            <td>2026-03-05</td>
+                            <td><span class="status-badge status-inactive">Inactive</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="action-btn btn-view">👁️</button>
+                                    <button class="action-btn btn-edit">✏️</button>
+                                    <button class="action-btn btn-delete">🗑️</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="9">Showing 1 to 5 of 45 entries</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Card Layout (Tablet) -->
+            <div class="card-table">
+                <div class="card-grid">
+                    <div class="data-card">
+                        <div class="card-header">
+                            <strong>#001 - John Smith</strong>
+                            <span class="status-badge status-active">Active</span>
+                        </div>
+                        <div class="card-field">
+                            <span class="label">Email:</span>
+                            <span class="value">john.smith@email.com</span>
+                        </div>
+                        <div class="card-field">
+                            <span class="label">Phone:</span>
+                            <span class="value">(555) 123-4567</span>
+                        </div>
+                        <div class="card-field">
+                            <span class="label">Orders:</span>
+                            <span class="value">12</span>
+                        </div>
+                        <div class="card-field">
+                            <span class="label">Total Spent:</span>
+                            <span class="value">$1,234.56</span>
+                        </div>
+                        <div class="card-field">
+                            <span class="label">Last Order:</span>
+                            <span class="value">2026-03-15</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn btn-view">👁️ View</button>
+                            <button class="action-btn btn-edit">✏️ Edit</button>
+                            <button class="action-btn btn-delete">🗑️ Delete</button>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <div class="card-header">
+                            <strong>#002 - Sarah Johnson</strong>
+                            <span class="status-badge status-active">Active</span>
+                        </div>
+                        <div class="card-field">
+                            <span class="label">Email:</span>
+                            <span class="value">sarah.j@email.com</span>
+                        </div>
+                        <div class="card-field">
+                            <span class="label">Phone:</span>
+                            <span class="value">(555) 234-5678</span>
+                        </div>
+                        <div class="card-field">
+                            <span class="label">Orders:</span>
+                            <span class="value">8</span>
+                        </div>
+                        <div class="card-field">
+                            <span class="label">Total Spent:</span>
+                            <span class="value">$892.30</span>
+                        </div>
+                        <div class="card-field">
+                            <span class="label">Last Order:</span>
+                            <span class="value">2026-03-14</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn btn-view">👁️ View</button>
+                            <button class="action-btn btn-edit">✏️ Edit</button>
+                            <button class="action-btn btn-delete">🗑️ Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <button class="pagination-btn">«</button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn">4</button>
+                <button class="pagination-btn">5</button>
+                <button class="pagination-btn">»</button>
+            </div>
+
+            <div class="table-info">
+                <span>Showing 1 to 5 of 45 entries</span>
+                <span>Page 1 of 9</span>
+            </div>
+        </div>
+
+        <!-- Method 2: Stacked Table with data-label -->
+        <div class="section">
+            <h2>2. Stacked Table (data-label method)</h2>
+            <p>This table transforms into a stacked layout on mobile using the data-label attribute.</p>
+            
+            <div class="table-container stacked-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Rating</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Product">Wireless Headphones</td>
+                            <td data-label="Category">Electronics</td>
+                            <td data-label="Price">$99.99</td>
+                            <td data-label="Stock">45</td>
+                            <td data-label="Rating">★★★★☆</td>
+                            <td data-label="Actions">
+                                <button class="action-btn btn-edit">Edit</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-label="Product">Smart Watch</td>
+                            <td data-label="Category">Electronics</td>
+                            <td data-label="Price">$249.99</td>
+                            <td data-label="Stock">23</td>
+                            <td data-label="Rating">★★★★★</td>
+                            <td data-label="Actions">
+                                <button class="action-btn btn-edit">Edit</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-label="Product">Running Shoes</td>
+                            <td data-label="Category">Sports</td>
+                            <td data-label="Price">$79.99</td>
+                            <td data-label="Stock">56</td>
+                            <td data-label="Rating">★★★☆☆</td>
+                            <td data-label="Actions">
+                                <button class="action-btn btn-edit">Edit</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Method 3: Table with Priority Columns -->
+        <div class="section">
+            <h2>3. Priority-based Responsive Table</h2>
+            <p>Hide less important columns on smaller screens.</p>
+            
+            <div class="table-container priority-table">
+                <style>
+                    .priority-table th.priority-3,
+                    .priority-table td.priority-3 {
+                        display: table-cell;
+                    }
+
+                    @media (max-width: 768px) {
+                        .priority-table th.priority-3,
+                        .priority-table td.priority-3 {
+                            display: none;
+                        }
+                    }
+
+                    @media (max-width: 480px) {
+                        .priority-table th.priority-2,
+                        .priority-table td.priority-2 {
+                            display: none;
+                        }
+                    }
+                </style>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="priority-1">Name</th>
+                            <th class="priority-2">Department</th>
+                            <th class="priority-3">Email</th>
+                            <th class="priority-2">Phone</th>
+                            <th class="priority-1">Status</th>
+                            <th class="priority-3">Last Login</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="priority-1">Alice Johnson</td>
+                            <td class="priority-2">Engineering</td>
+                            <td class="priority-3">alice@company.com</td>
+                            <td class="priority-2">ext. 1234</td>
+                            <td class="priority-1"><span class="status-badge status-active">Active</span></td>
+                            <td class="priority-3">2 mins ago</td>
+                        </tr>
+                        <tr>
+                            <td class="priority-1">Bob Smith</td>
+                            <td class="priority-2">Marketing</td>
+                            <td class="priority-3">bob@company.com</td>
+                            <td class="priority-2">ext. 5678</td>
+                            <td class="priority-1"><span class="status-badge status-active">Active</span></td>
+                            <td class="priority-3">1 hour ago</td>
+                        </tr>
+                        <tr>
+                            <td class="priority-1">Carol Davis</td>
+                            <td class="priority-2">Sales</td>
+                            <td class="priority-3">carol@company.com</td>
+                            <td class="priority-2">ext. 9012</td>
+                            <td class="priority-1"><span class="status-badge status-inactive">Inactive</span></td>
+                            <td class="priority-3">3 days ago</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Method 4: Accordion Table -->
+        <div class="section">
+            <h2>4. Accordion-style Responsive Table</h2>
+            <p>Click on rows to expand details on mobile.</p>
+            
+            <div class="table-container accordion-table">
+                <style>
+                    .accordion-row .expanded-content {
+                        display: none;
+                    }
+
+                    @media (max-width: 768px) {
+                        .accordion-table th:not(:first-child),
+                        .accordion-table td:not(:first-child):not(.expanded-content) {
+                            display: none;
+                        }
+                        
+                        .accordion-row {
+                            cursor: pointer;
+                        }
+                        
+                        .accordion-row.active .expanded-content {
+                            display: table-row;
+                        }
+                        
+                        .accordion-row.active td:first-child {
+                            background: #f0f0f0;
+                        }
+                    }
+                </style>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Position</th>
+                            <th>Department</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Start Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="accordion-row" onclick="this.classList.toggle('active')">
+                            <td>David Miller</td>
+                            <td>Developer</td>
+                            <td>Engineering</td>
+                            <td>david@company.com</td>
+                            <td>ext. 1111</td>
+                            <td>2024-01-15</td>
+                        </tr>
+                        <tr class="accordion-row expanded-content">
+                            <td colspan="6">
+                                <div style="padding: 15px; background: #f5f5f5;">
+                                    <strong>Additional Details:</strong><br>
+                                    - Team: Frontend Development<br>
+                                    - Projects: 5 active<br>
+                                    - Manager: Alice Johnson
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <tr class="accordion-row" onclick="this.classList.toggle('active')">
+                            <td>Eva Green</td>
+                            <td>Designer</td>
+                            <td>Creative</td>
+                            <td>eva@company.com</td>
+                            <td>ext. 2222</td>
+                            <td>2024-02-20</td>
+                        </tr>
+                        <tr class="accordion-row expanded-content">
+                            <td colspan="6">
+                                <div style="padding: 15px; background: #f5f5f5;">
+                                    <strong>Additional Details:</strong><br>
+                                    - Team: UI/UX Design<br>
+                                    - Specialization: Mobile Apps<br>
+                                    - Portfolio: 12 projects
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Table Features Summary -->
+        <div class="section">
+            <h2>📱 Responsive Table Methods</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 5px;">
+                    <h3>Method 1: Horizontal Scroll</h3>
+                    <p>Best for: Tables with many columns that must all be visible</p>
+                    <p>Pros: Maintains table structure</p>
+                    <p>Cons: Requires horizontal scrolling on mobile</p>
+                </div>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 5px;">
+                    <h3>Method 2: Card Layout</h3>
+                    <p>Best for: Profile data, customer lists</p>
+                    <p>Pros: Mobile-friendly, easy to read</p>
+                    <p>Cons: Loses tabular comparison</p>
+                </div>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 5px;">
+                    <h3>Method 3: Stacked with Labels</h3>
+                    <p>Best for: Simple data sets</p>
+                    <p>Pros: Maintains all data, accessible</p>
+                    <p>Cons: Can become very tall</p>
+                </div>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 5px;">
+                    <h3>Method 4: Priority Columns</h3>
+                    <p>Best for: Dashboards, analytics</p>
+                    <p>Pros: Shows most important data first</p>
+                    <p>Cons: Hides some data by default</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breakpoint Indicator -->
+    <div class="breakpoint-indicator"></div>
+
+    <script>
+        // Sortable table functionality
+        document.querySelectorAll('th.sortable').forEach(header => {
+            header.addEventListener('click', () => {
+                const isAsc = header.classList.contains('asc');
+                document.querySelectorAll('th.sortable').forEach(th => {
+                    th.classList.remove('asc', 'desc');
+                });
+                header.classList.add(isAsc ? 'desc' : 'asc');
+                // Here you would implement actual sorting logic
+            });
+        });
+
+        // Accordion table for mobile
+        if (window.innerWidth <= 768) {
+            document.querySelectorAll('.accordion-row').forEach(row => {
+                row.addEventListener('click', function() {
+                    const nextRow = this.nextElementSibling;
+                    if (nextRow && nextRow.classList.contains('expanded-content')) {
+                        this.classList.toggle('active');
+                        nextRow.style.display = this.classList.contains('active') ? 'table-row' : 'none';
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>

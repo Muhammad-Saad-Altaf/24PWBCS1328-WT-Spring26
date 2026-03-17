@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 17: Responsive Utility Classes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #444;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        /* ========== RESPONSIVE UTILITY CLASSES ========== */
+
+        /* Base breakpoint prefixes:
+           - (no prefix): mobile (0-767px)
+           - sm: tablet (768-1024px)
+           - md: desktop (1024-1200px)
+           - lg: large desktop (1200-1400px)
+           - xl: extra large (1400px+)
+        */
+
+        /* Display Utilities */
+        .d-none { display: none !important; }
+        .d-block { display: block !important; }
+        .d-inline { display: inline !important; }
+        .d-inline-block { display: inline-block !important; }
+        .d-flex { display: flex !important; }
+        .d-grid { display: grid !important; }
+
+        /* Visibility by breakpoint */
+        .visible-mobile,
+        .visible-sm,
+        .visible-md,
+        .visible-lg,
+        .visible-xl {
+            display: none !important;
+        }
+
+        /* Flex Utilities */
+        .flex-row { flex-direction: row !important; }
+        .flex-column { flex-direction: column !important; }
+        .flex-wrap { flex-wrap: wrap !important; }
+        .flex-nowrap { flex-wrap: nowrap !important; }
+        
+        .justify-start { justify-content: flex-start !important; }
+        .justify-end { justify-content: flex-end !important; }
+        .justify-center { justify-content: center !important; }
+        .justify-between { justify-content: space-between !important; }
+        .justify-around { justify-content: space-around !important; }
+        
+        .align-start { align-items: flex-start !important; }
+        .align-end { align-items: flex-end !important; }
+        .align-center { align-items: center !important; }
+        .align-stretch { align-items: stretch !important; }
+
+        /* Spacing Utilities (margin and padding) */
+        .m-0 { margin: 0 !important; }
+        .m-1 { margin: 0.25rem !important; }
+        .m-2 { margin: 0.5rem !important; }
+        .m-3 { margin: 1rem !important; }
+        .m-4 { margin: 1.5rem !important; }
+        .m-5 { margin: 3rem !important; }
+
+        .mt-0 { margin-top: 0 !important; }
+        .mt-1 { margin-top: 0.25rem !important; }
+        .mt-2 { margin-top: 0.5rem !important; }
+        .mt-3 { margin-top: 1rem !important; }
+        .mt-4 { margin-top: 1.5rem !important; }
+        .mt-5 { margin-top: 3rem !important; }
+
+        .mb-0 { margin-bottom: 0 !important; }
+        .mb-1 { margin-bottom: 0.25rem !important; }
+        .mb-2 { margin-bottom: 0.5rem !important; }
+        .mb-3 { margin-bottom: 1rem !important; }
+        .mb-4 { margin-bottom: 1.5rem !important; }
+        .mb-5 { margin-bottom: 3rem !important; }
+
+        .ml-0 { margin-left: 0 !important; }
+        .ml-1 { margin-left: 0.25rem !important; }
+        .ml-2 { margin-left: 0.5rem !important; }
+        .ml-3 { margin-left: 1rem !important; }
+        .ml-4 { margin-left: 1.5rem !important; }
+        .ml-5 { margin-left: 3rem !important; }
+
+        .mr-0 { margin-right: 0 !important; }
+        .mr-1 { margin-right: 0.25rem !important; }
+        .mr-2 { margin-right: 0.5rem !important; }
+        .mr-3 { margin-right: 1rem !important; }
+        .mr-4 { margin-right: 1.5rem !important; }
+        .mr-5 { margin-right: 3rem !important; }
+
+        .mx-0 { margin-left: 0 !important; margin-right: 0 !important; }
+        .mx-1 { margin-left: 0.25rem !important; margin-right: 0.25rem !important; }
+        .mx-2 { margin-left: 0.5rem !important; margin-right: 0.5rem !important; }
+        .mx-3 { margin-left: 1rem !important; margin-right: 1rem !important; }
+        .mx-4 { margin-left: 1.5rem !important; margin-right: 1.5rem !important; }
+        .mx-5 { margin-left: 3rem !important; margin-right: 3rem !important; }
+
+        .my-0 { margin-top: 0 !important; margin-bottom: 0 !important; }
+        .my-1 { margin-top: 0.25rem !important; margin-bottom: 0.25rem !important; }
+        .my-2 { margin-top: 0.5rem !important; margin-bottom: 0.5rem !important; }
+        .my-3 { margin-top: 1rem !important; margin-bottom: 1rem !important; }
+        .my-4 { margin-top: 1.5rem !important; margin-bottom: 1.5rem !important; }
+        .my-5 { margin-top: 3rem !important; margin-bottom: 3rem !important; }
+
+        /* Padding utilities */
+        .p-0 { padding: 0 !important; }
+        .p-1 { padding: 0.25rem !important; }
+        .p-2 { padding: 0.5rem !important; }
+        .p-3 { padding: 1rem !important; }
+        .p-4 { padding: 1.5rem !important; }
+        .p-5 { padding: 3rem !important; }
+
+        .pt-0 { padding-top: 0 !important; }
+        .pt-1 { padding-top: 0.25rem !important; }
+        .pt-2 { padding-top: 0.5rem !important; }
+        .pt-3 { padding-top: 1rem !important; }
+        .pt-4 { padding-top: 1.5rem !important; }
+        .pt-5 { padding-top: 3rem !important; }
+
+        .pb-0 { padding-bottom: 0 !important; }
+        .pb-1 { padding-bottom: 0.25rem !important; }
+        .pb-2 { padding-bottom: 0.5rem !important; }
+        .pb-3 { padding-bottom: 1rem !important; }
+        .pb-4 { padding-bottom: 1.5rem !important; }
+        .pb-5 { padding-bottom: 3rem !important; }
+
+        /* Text Utilities */
+        .text-left { text-align: left !important; }
+        .text-center { text-align: center !important; }
+        .text-right { text-align: right !important; }
+        .text-justify { text-align: justify !important; }
+
+        .text-xs { font-size: 0.75rem !important; }
+        .text-sm { font-size: 0.875rem !important; }
+        .text-base { font-size: 1rem !important; }
+        .text-lg { font-size: 1.125rem !important; }
+        .text-xl { font-size: 1.25rem !important; }
+        .text-2xl { font-size: 1.5rem !important; }
+        .text-3xl { font-size: 1.875rem !important; }
+        .text-4xl { font-size: 2.25rem !important; }
+
+        .font-light { font-weight: 300 !important; }
+        .font-normal { font-weight: 400 !important; }
+        .font-medium { font-weight: 500 !important; }
+        .font-semibold { font-weight: 600 !important; }
+        .font-bold { font-weight: 700 !important; }
+
+        /* Color Utilities */
+        .text-primary { color: #667eea !important; }
+        .text-success { color: #4ecdc4 !important; }
+        .text-danger { color: #ff6b6b !important; }
+        .text-warning { color: #ffb347 !important; }
+        .text-muted { color: #999 !important; }
+
+        .bg-primary { background: #667eea !important; }
+        .bg-success { background: #4ecdc4 !important; }
+        .bg-danger { background: #ff6b6b !important; }
+        .bg-warning { background: #ffb347 !important; }
+        .bg-light { background: #f8f9fa !important; }
+        .bg-dark { background: #333 !important; }
+
+        /* Width Utilities */
+        .w-25 { width: 25% !important; }
+        .w-50 { width: 50% !important; }
+        .w-75 { width: 75% !important; }
+        .w-100 { width: 100% !important; }
+        .w-auto { width: auto !important; }
+
+        /* Border Utilities */
+        .border { border: 1px solid #ddd !important; }
+        .border-0 { border: 0 !important; }
+        .border-top { border-top: 1px solid #ddd !important; }
+        .border-bottom { border-bottom: 1px solid #ddd !important; }
+        .rounded { border-radius: 0.25rem !important; }
+        .rounded-lg { border-radius: 0.5rem !important; }
+        .rounded-full { border-radius: 9999px !important; }
+
+        /* Shadow Utilities */
+        .shadow-none { box-shadow: none !important; }
+        .shadow-sm { box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important; }
+        .shadow { box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important; }
+        .shadow-md { box-shadow: 0 5px 20px rgba(0,0,0,0.15) !important; }
+        .shadow-lg { box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important; }
+
+        /* ========== RESPONSIVE BREAKPOINTS ========== */
+
+        /* Mobile (default) - already defined above */
+
+        /* Small / Tablet (768px and up) */
+        @media (min-width: 768px) {
+            .visible-sm { display: block !important; }
+            
+            .sm\:d-none { display: none !important; }
+            .sm\:d-block { display: block !important; }
+            .sm\:d-flex { display: flex !important; }
+            .sm\:d-grid { display: grid !important; }
+            
+            .sm\:flex-row { flex-direction: row !important; }
+            .sm\:flex-column { flex-direction: column !important; }
+            
+            .sm\:justify-start { justify-content: flex-start !important; }
+            .sm\:justify-center { justify-content: center !important; }
+            .sm\:justify-between { justify-content: space-between !important; }
+            
+            .sm\:text-left { text-align: left !important; }
+            .sm\:text-center { text-align: center !important; }
+            .sm\:text-right { text-align: right !important; }
+            
+            .sm\:w-25 { width: 25% !important; }
+            .sm\:w-50 { width: 50% !important; }
+            .sm\:w-75 { width: 75% !important; }
+            .sm\:w-100 { width: 100% !important; }
+        }
+
+        /* Medium / Desktop (1024px and up) */
+        @media (min-width: 1024px) {
+            .visible-md { display: block !important; }
+            
+            .md\:d-none { display: none !important; }
+            .md\:d-block { display: block !important; }
+            .md\:d-flex { display: flex !important; }
+            .md\:d-grid { display: grid !important; }
+            
+            .md\:flex-row { flex-direction: row !important; }
+            .md\:flex-column { flex-direction: column !important; }
+            
+            .md\:justify-start { justify-content: flex-start !important; }
+            .md\:justify-center { justify-content: center !important; }
+            .md\:justify-between { justify-content: space-between !important; }
+            
+            .md\:text-left { text-align: left !important; }
+            .md\:text-center { text-align: center !important; }
+            .md\:text-right { text-align: right !important; }
+            
+            .md\:w-25 { width: 25% !important; }
+            .md\:w-50 { width: 50% !important; }
+            .md\:w-75 { width: 75% !important; }
+            .md\:w-100 { width: 100% !important; }
+        }
+
+        /* Large / Large Desktop (1200px and up) */
+        @media (min-width: 1200px) {
+            .visible-lg { display: block !important; }
+            
+            .lg\:d-none { display: none !important; }
+            .lg\:d-block { display: block !important; }
+            .lg\:d-flex { display: flex !important; }
+            .lg\:d-grid { display: grid !important; }
+            
+            .lg\:flex-row { flex-direction: row !important; }
+            .lg\:flex-column { flex-direction: column !important; }
+            
+            .lg\:justify-start { justify-content: flex-start !important; }
+            .lg\:justify-center { justify-content: center !important; }
+            .lg\:justify-between { justify-content: space-between !important; }
+            
+            .lg\:text-left { text-align: left !important; }
+            .lg\:text-center { text-align: center !important; }
+            .lg\:text-right { text-align: right !important; }
+        }
+
+        /* Extra Large (1400px and up) */
+        @media (min-width: 1400px) {
+            .visible-xl { display: block !important; }
+            
+            .xl\:d-none { display: none !important; }
+            .xl\:d-block { display: block !important; }
+            .xl\:d-flex { display: flex !important; }
+            .xl\:d-grid { display: grid !important; }
+            
+            .xl\:flex-row { flex-direction: row !important; }
+            .xl\:flex-column { flex-direction: column !important; }
+            
+            .xl\:justify-start { justify-content: flex-start !important; }
+            .xl\:justify-center { justify-content: center !important; }
+            .xl\:justify-between { justify-content: space-between !important; }
+            
+            .xl\:text-left { text-align: left !important; }
+            .xl\:text-center { text-align: center !important; }
+            .xl\:text-right { text-align: right !important; }
+        }
+
+        /* Mobile visibility (default) */
+        @media (max-width: 767px) {
+            .visible-mobile { display: block !important; }
+        }
+
+        /* Demo Styles */
+        .demo-box {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .color-box {
+            padding: 20px;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .utility-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .utility-table th,
+        .utility-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .utility-table th {
+            background: #333;
+            color: white;
+        }
+
+        .utility-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background: #667eea;
+            color: white;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Responsive Utility Classes</h1>
+
+        <!-- Display Utilities Demo -->
+        <div class="section">
+            <h2>1. Display Utilities</h2>
+            <div class="demo-grid">
+                <div class="demo-box">
+                    <span class="badge">.d-none</span>
+                    <div class="d-none">This is hidden</div>
+                </div>
+                <div class="demo-box">
+                    <span class="badge">.d-block</span>
+                    <div class="d-block">This is block</div>
+                </div>
+                <div class="demo-box">
+                    <span class="badge">.d-inline</span>
+                    <div><span class="d-inline bg-primary text-white p-1">Inline</span> text</div>
+                </div>
+                <div class="demo-box">
+                    <span class="badge">.d-flex</span>
+                    <div class="d-flex gap-2">
+                        <div class="bg-primary text-white p-2">1</div>
+                        <div class="bg-success text-white p-2">2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Responsive Visibility -->
+        <div class="section">
+            <h2>2. Responsive Visibility</h2>
+            <p>These elements appear/disappear at different breakpoints:</p>
+            
+            <div class="visible-mobile bg-primary text-white p-3 rounded mb-2">
+                📱 Visible only on Mobile (&lt; 768px)
+            </div>
+            
+            <div class="visible-sm bg-success text-white p-3 rounded mb-2">
+                📟 Visible only on Tablet (768px - 1024px)
+            </div>
+            
+            <div class="visible-md bg-warning text-white p-3 rounded mb-2">
+                💻 Visible only on Desktop (1024px - 1200px)
+            </div>
+            
+            <div class="visible-lg bg-danger text-white p-3 rounded mb-2">
+                🖥️ Visible only on Large Desktop (1200px - 1400px)
+            </div>
+            
+            <div class="visible-xl bg-dark text-white p-3 rounded">
+                🖥️ Visible only on Extra Large (1400px+)
+            </div>
+        </div>
+
+        <!-- Flexbox Utilities -->
+        <div class="section">
+            <h2>3. Flexbox Utilities</h2>
+            
+            <h3>Justify Content:</h3>
+            <div class="demo-box">
+                <div class="d-flex justify-start bg-light p-2 mb-2">
+                    <div class="bg-primary text-white p-2 m-1">1</div>
+                    <div class="bg-success text-white p-2 m-1">2</div>
+                    <div class="bg-danger text-white p-2 m-1">3</div>
+                </div>
+                <span class="badge">.justify-start</span>
+            </div>
+
+            <div class="demo-box">
+                <div class="d-flex justify-center bg-light p-2 mb-2">
+                    <div class="bg-primary text-white p-2 m-1">1</div>
+                    <div class="bg-success text-white p-2 m-1">2</div>
+                    <div class="bg-danger text-white p-2 m-1">3</div>
+                </div>
+                <span class="badge">.justify-center</span>
+            </div>
+
+            <div class="demo-box">
+                <div class="d-flex justify-between bg-light p-2 mb-2">
+                    <div class="bg-primary text-white p-2 m-1">1</div>
+                    <div class="bg-success text-white p-2 m-1">2</div>
+                    <div class="bg-danger text-white p-2 m-1">3</div>
+                </div>
+                <span class="badge">.justify-between</span>
+            </div>
+
+            <h3>Align Items:</h3>
+            <div style="height: 100px;" class="d-flex align-start bg-light p-2 mb-2">
+                <div class="bg-primary text-white p-2">Start</div>
+                <div class="bg-success text-white p-2">Start</div>
+            </div>
+            <span class="badge">.align-start</span>
+
+            <div style="height: 100px;" class="d-flex align-center bg-light p-2 mt-3 mb-2">
+                <div class="bg-primary text-white p-2">Center</div>
+                <div class="bg-success text-white p-2">Center</div>
+            </div>
+            <span class="badge">.align-center</span>
+
+            <div style="height: 100px;" class="d-flex align-end bg-light p-2 mt-3">
+                <div class="bg-primary text-white p-2">End</div>
+                <div class="bg-success text-white p-2">End</div>
+            </div>
+            <span class="badge">.align-end</span>
+        </div>
+
+        <!-- Spacing Utilities -->
+        <div class="section">
+            <h2>4. Spacing Utilities (Margin & Padding)</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-box">
+                    <h4>Margin Examples</h4>
+                    <div class="bg-light p-2">
+                        <div class="bg-primary text-white m-1 p-1">m-1</div>
+                        <div class="bg-success text-white m-2 p-1">m-2</div>
+                        <div class="bg-danger text-white m-3 p-1">m-3</div>
+                        <div class="bg-warning text-white m-4 p-1">m-4</div>
+                        <div class="bg-dark text-white m-5 p-1">m-5</div>
+                    </div>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Padding Examples</h4>
+                    <div class="bg-light">
+                        <div class="bg-primary text-white p-1 m-1">p-1</div>
+                        <div class="bg-success text-white p-2 m-1">p-2</div>
+                        <div class="bg-danger text-white p-3 m-1">p-3</div>
+                        <div class="bg-warning text-white p-4 m-1">p-4</div>
+                        <div class="bg-dark text-white p-5 m-1">p-5</div>
+                    </div>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Individual Margins</h4>
+                    <div class="bg-light p-2">
+                        <div class="bg-primary text-white mt-3 p-1">mt-3</div>
+                        <div class="bg-success text-white mb-3 p-1">mb-3</div>
+                        <div class="bg-danger text-white ml-3 p-1">ml-3</div>
+                        <div class="bg-warning text-white mr-3 p-1">mr-3</div>
+                    </div>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Axis Spacing</h4>
+                    <div class="bg-light p-2">
+                        <div class="bg-primary text-white mx-3 my-2 p-1">mx-3 my-2</div>
+                        <div class="bg-success text-white px-3 py-2">px-3 py-2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Text Utilities -->
+        <div class="section">
+            <h2>5. Text Utilities</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-box">
+                    <h4>Text Alignment</h4>
+                    <div class="text-left bg-light p-2 mb-2">.text-left</div>
+                    <div class="text-center bg-light p-2 mb-2">.text-center</div>
+                    <div class="text-right bg-light p-2">.text-right</div>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Text Sizes</h4>
+                    <div class="text-xs">.text-xs (0.75rem)</div>
+                    <div class="text-sm">.text-sm (0.875rem)</div>
+                    <div class="text-base">.text-base (1rem)</div>
+                    <div class="text-lg">.text-lg (1.125rem)</div>
+                    <div class="text-xl">.text-xl (1.25rem)</div>
+                    <div class="text-2xl">.text-2xl (1.5rem)</div>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Font Weights</h4>
+                    <div class="font-light">.font-light</div>
+                    <div class="font-normal">.font-normal</div>
+                    <div class="font-medium">.font-medium</div>
+                    <div class="font-semibold">.font-semibold</div>
+                    <div class="font-bold">.font-bold</div>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Text Colors</h4>
+                    <div class="text-primary">.text-primary</div>
+                    <div class="text-success">.text-success</div>
+                    <div class="text-danger">.text-danger</div>
+                    <div class="text-warning">.text-warning</div>
+                    <div class="text-muted">.text-muted</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Background Colors -->
+        <div class="section">
+            <h2>6. Background Colors</h2>
+            <div class="demo-grid">
+                <div class="bg-primary text-white p-3 rounded">.bg-primary</div>
+                <div class="bg-success text-white p-3 rounded">.bg-success</div>
+                <div class="bg-danger text-white p-3 rounded">.bg-danger</div>
+                <div class="bg-warning text-white p-3 rounded">.bg-warning</div>
+                <div class="bg-light p-3 rounded">.bg-light</div>
+                <div class="bg-dark text-white p-3 rounded">.bg-dark</div>
+            </div>
+        </div>
+
+        <!-- Width Utilities -->
+        <div class="section">
+            <h2>7. Width Utilities</h2>
+            <div class="bg-light p-3">
+                <div class="bg-primary text-white p-2 mb-2 w-25">.w-25</div>
+                <div class="bg-success text-white p-2 mb-2 w-50">.w-50</div>
+                <div class="bg-danger text-white p-2 mb-2 w-75">.w-75</div>
+                <div class="bg-warning text-white p-2 w-100">.w-100</div>
+            </div>
+        </div>
+
+        <!-- Border Utilities -->
+        <div class="section">
+            <h2>8. Border Utilities</h2>
+            <div class="demo-grid">
+                <div class="border p-3 rounded">.border .rounded</div>
+                <div class="border-0 bg-light p-3">.border-0</div>
+                <div class="border-top p-3">.border-top</div>
+                <div class="border-bottom p-3">.border-bottom</div>
+                <div class="border rounded-lg p-3">.rounded-lg</div>
+                <div class="border rounded-full p-3">.rounded-full</div>
+            </div>
+        </div>
+
+        <!-- Shadow Utilities -->
+        <div class="section">
+            <h2>9. Shadow Utilities</h2>
+            <div class="demo-grid">
+                <div class="shadow-none p-3 bg-light">.shadow-none</div>
+                <div class="shadow-sm p-3 bg-light">.shadow-sm</div>
+                <div class="shadow p-3 bg-light">.shadow</div>
+                <div class="shadow-md p-3 bg-light">.shadow-md</div>
+                <div class="shadow-lg p-3 bg-light">.shadow-lg</div>
+            </div>
+        </div>
+
+        <!-- Responsive Utility Classes -->
+        <div class="section">
+            <h2>10. Responsive Utility Classes</h2>
+            <p>Prefix utilities with breakpoints: sm:, md:, lg:, xl:</p>
+            
+            <div class="demo-box">
+                <div class="bg-primary text-white p-3 text-center sm:text-left md:text-center lg:text-right">
+                    Text alignment changes at breakpoints:
+                    • Mobile: center
+                    • Tablet: left
+                    • Desktop: center
+                    • Large: right
+                </div>
+            </div>
+
+            <div class="demo-box">
+                <div class="d-flex flex-column sm:flex-row md:flex-column lg:flex-row justify-between">
+                    <div class="bg-success text-white p-2 m-1">Item 1</div>
+                    <div class="bg-success text-white p-2 m-1">Item 2</div>
+                    <div class="bg-success text-white p-2 m-1">Item 3</div>
+                </div>
+                <p class="mt-2">Flex direction changes: column (mobile) → row (tablet) → column (desktop) → row (large)</p>
+            </div>
+
+            <div class="demo-box">
+                <div class="w-100 sm:w-50 md:w-75 lg:w-50 xl:w-25 bg-primary text-white p-3">
+                    Width changes: 100% → 50% → 75% → 50% → 25%
+                </div>
+            </div>
+        </div>
+
+        <!-- Utility Classes Reference -->
+        <div class="section">
+            <h2>📚 Utility Classes Reference</h2>
+            
+            <table class="utility-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Prefix</th>
+                        <th>Examples</th>
+                        <th>Responsive Prefixes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Display</td>
+                        <td>d-</td>
+                        <td>d-none, d-block, d-flex, d-grid</td>
+                        <td>sm:, md:, lg:, xl:</td>
+                    </tr>
+                    <tr>
+                        <td>Flexbox</td>
+                        <td>flex-, justify-, align-</td>
+                        <td>flex-row, justify-center, align-start</td>
+                        <td>sm:, md:, lg:, xl:</td>
+                    </tr>
+                    <tr>
+                        <td>Spacing</td>
+                        <td>m-, p-</td>
+                        <td>m-1, p-2, mt-3, mx-4</td>
+                        <td>sm:, md:, lg:, xl:</td>
+                    </tr>
+                    <tr>
+                        <td>Text</td>
+                        <td>text-</td>
+                        <td>text-center, text-lg, font-bold</td>
+                        <td>sm:, md:, lg:, xl:</td>
+                    </tr>
+                    <tr>
+                        <td>Colors</td>
+                        <td>text-, bg-</td>
+                        <td>text-primary, bg-success</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Width</td>
+                        <td>w-</td>
+                        <td>w-25, w-50, w-100</td>
+                        <td>sm:, md:, lg:, xl:</td>
+                    </tr>
+                    <tr>
+                        <td>Border</td>
+                        <td>border, rounded</td>
+                        <td>border, rounded, rounded-lg</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Shadow</td>
+                        <td>shadow-</td>
+                        <td>shadow-sm, shadow, shadow-lg</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

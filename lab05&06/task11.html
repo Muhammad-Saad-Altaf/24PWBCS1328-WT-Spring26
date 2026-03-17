@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 11: CSS Grid Magazine Layout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', Times, serif;
+            background: #fafafa;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .magazine {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+
+        /* Magazine Header */
+        .magazine-header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 3px double #333;
+            margin-bottom: 40px;
+        }
+
+        .magazine-header h1 {
+            font-size: 4rem;
+            font-family: 'Times New Roman', serif;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .magazine-header .subhead {
+            font-size: 1rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .magazine-header .date {
+            margin-top: 10px;
+            font-style: italic;
+            color: #999;
+        }
+
+        /* CSS Grid Magazine Layout - Asymmetric Desktop */
+        .magazine-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 2fr;
+            grid-auto-rows: minmax(100px, auto);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Featured Stories */
+        .featured-1 {
+            grid-column: 1 / 3;
+            grid-row: span 2;
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-1::before {
+            content: 'FEATURE';
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .featured-2 {
+            grid-column: 3 / 5;
+            grid-row: span 1;
+            background: #333;
+            color: white;
+            padding: 30px;
+            border-radius: 5px;
+        }
+
+        .featured-3 {
+            grid-column: 3 / 4;
+            grid-row: span 1;
+            background: #667eea;
+            color: white;
+            padding: 30px;
+            border-radius: 5px;
+        }
+
+        .featured-4 {
+            grid-column: 4 / 5;
+            grid-row: span 1;
+            background: #4ecdc4;
+            color: white;
+            padding: 30px;
+            border-radius: 5px;
+        }
+
+        /* Article Grid */
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .article-card {
+            background: white;
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .article-card.large {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .article-card.wide {
+            grid-column: span 2;
+        }
+
+        .article-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .article-card.large img {
+            height: 300px;
+        }
+
+        .article-category {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #667eea;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .article-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .article-meta {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .article-excerpt {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Sidebar/Opinion Section */
+        .opinion-section {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin: 40px 0;
+            padding: 30px 0;
+            border-top: 2px solid #333;
+            border-bottom: 2px solid #333;
+        }
+
+        .opinion-main {
+            background: #f5f5f5;
+            padding: 30px;
+            border-radius: 5px;
+        }
+
+        .opinion-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .opinion-item {
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* Magazine Footer */
+        .magazine-footer {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 3px double #333;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        /* Responsive Typography */
+        .responsive-typography {
+            font-size: 1rem;
+        }
+
+        /* Tablet Layout (768px - 1024px) */
+        @media (max-width: 1024px) {
+            .magazine {
+                padding: 20px;
+            }
+
+            .magazine-header h1 {
+                font-size: 3rem;
+            }
+
+            .magazine-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .featured-1 {
+                grid-column: 1 / 3;
+                grid-row: span 1;
+            }
+
+            .featured-2 {
+                grid-column: 1 / 2;
+            }
+
+            .featured-3 {
+                grid-column: 2 / 3;
+            }
+
+            .featured-4 {
+                grid-column: 1 / 3;
+            }
+
+            .article-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .article-card.large {
+                grid-column: span 2;
+            }
+
+            .article-card.wide {
+                grid-column: span 2;
+            }
+
+            .opinion-section {
+                grid-template-columns: 1fr;
+            }
+
+            .opinion-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .magazine-footer {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Mobile Layout (< 768px) */
+        @media (max-width: 768px) {
+            .magazine-header h1 {
+                font-size: 2rem;
+                letter-spacing: 2px;
+            }
+
+            .magazine-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .featured-1,
+            .featured-2,
+            .featured-3,
+            .featured-4 {
+                grid-column: 1 / 2;
+                grid-row: auto;
+            }
+
+            .article-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .article-card,
+            .article-card.large,
+            .article-card.wide {
+                grid-column: 1 / 2;
+            }
+
+            .opinion-section {
+                grid-template-columns: 1fr;
+            }
+
+            .opinion-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .magazine-footer {
+                grid-template-columns: 1fr;
+            }
+
+            /* Typography adjustments */
+            .article-title {
+                font-size: 1.1rem;
+            }
+
+            .featured-1 .article-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Small Mobile (< 480px) */
+        @media (max-width: 480px) {
+            .magazine {
+                padding: 10px;
+            }
+
+            .magazine-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .magazine-header .subhead {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Image Responsiveness */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Pull Quote Styling */
+        .pull-quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: #667eea;
+            margin: 20px 0;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            background: #f8f9fa;
+        }
+
+        @media (max-width: 768px) {
+            .pull-quote {
+                font-size: 1.2rem;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="magazine">
+        <!-- Header -->
+        <header class="magazine-header">
+            <h1>THE DAILY CHRONICLE</h1>
+            <div class="subhead">INTERNATIONAL EDITION</div>
+            <div class="date">MARCH 17, 2026 · VOLUME 42 · ISSUE 123</div>
+        </header>
+
+        <!-- Featured Stories Grid (Asymmetric on Desktop) -->
+        <div class="magazine-grid">
+            <div class="featured-1">
+                <span class="article-category">EXCLUSIVE</span>
+                <h2 class="article-title">Global Climate Summit Reaches Historic Agreement</h2>
+                <p class="article-meta">By Sarah Johnson · 10 min read</p>
+                <p class="article-excerpt">Nations worldwide commit to unprecedented carbon reduction targets in landmark deal. The agreement includes provisions for developing nations and establishes a $100 billion annual fund for green technology transfer.</p>
+                <div class="pull-quote">"This is not just an agreement, it's a commitment to our children's future."</div>
+                <p>UN Secretary-General António Guterres hailed the pact as "a masterclass in compromise and vision." The deal, negotiated over two weeks, sets a 45% emissions reduction target by 2030 and net-zero by 2050.</p>
+            </div>
+
+            <div class="featured-2">
+                <span class="article-category">BREAKING</span>
+                <h2 class="article-title">Tech Giant Unveils AI Revolution</h2>
+                <p class="article-meta">By Mike Chen · 5 min read</p>
+                <p>New AI model promises to transform healthcare, education, and climate science with unprecedented accuracy and efficiency.</p>
+            </div>
+
+            <div class="featured-3">
+                <span class="article-category">CULTURE</span>
+                <h2 class="article-title">The Renaissance of Print</h2>
+                <p class="article-meta">By Emma Davis · 4 min read</p>
+                <p>In a digital age, young readers are rediscovering the joy of physical books and magazines.</p>
+            </div>
+
+            <div class="featured-4">
+                <span class="article-category">SCIENCE</span>
+                <h2 class="article-title">Mars Mission Success</h2>
+                <p class="article-meta">By David Wilson · 3 min read</p>
+                <p>First human mission to Mars returns with groundbreaking discoveries about potential life.</p>
+            </div>
+        </div>
+
+        <!-- Article Grid (Complex on Desktop) -->
+        <div class="article-grid">
+            <div class="article-card large">
+                <img src="https://via.placeholder.com/600x400" alt="Article image">
+                <span class="article-category">INVESTIGATION</span>
+                <h3 class="article-title">The Hidden Cost of Fast Fashion</h3>
+                <p class="article-meta">By Lisa Brown · March 17, 2026</p>
+                <p class="article-excerpt">An in-depth look at how the fashion industry's race to the bottom is affecting workers, communities, and the environment across three continents.</p>
+            </div>
+
+            <div class="article-card">
+                <img src="https://via.placeholder.com/300x200" alt="Article image">
+                <span class="article-category">TECHNOLOGY</span>
+                <h3 class="article-title">Quantum Computing Breakthrough</h3>
+                <p class="article-meta">By Tom Harris</p>
+            </div>
+
+            <div class="article-card">
+                <img src="https://via.placeholder.com/300x200" alt="Article image">
+                <span class="article-category">HEALTH</span>
+                <h3 class="article-title">Longevity Secrets</h3>
+                <p class="article-meta">By Dr. Sarah Lee</p>
+            </div>
+
+            <div class="article-card wide">
+                <img src="https://via.placeholder.com/600x200" alt="Article image">
+                <span class="article-category">TRAVEL</span>
+                <h3 class="article-title">10 Undiscovered Paradises for 2026</h3>
+                <p class="article-meta">By Mark Adams</p>
+                <p class="article-excerpt">From hidden beaches in Southeast Asia to mountain retreats in South America, explore the world's best-kept secrets.</p>
+            </div>
+
+            <div class="article-card">
+                <img src="https://via.placeholder.com/300x200" alt="Article image">
+                <span class="article-category">BUSINESS</span>
+                <h3 class="article-title">The Rise of Green Energy</h3>
+                <p class="article-meta">By James Wong</p>
+            </div>
+
+            <div class="article-card">
+                <img src="https://via.placeholder.com/300x200" alt="Article image">
+                <span class="article-category">SPORTS</span>
+                <h3 class="article-title">World Cup 2026 Preview</h3>
+                <p class="article-meta">By Michael Scott</p>
+            </div>
+
+            <div class="article-card">
+                <img src="https://via.placeholder.com/300x200" alt="Article image">
+                <span class="article-category">ARTS</span>
+                <h3 class="article-title">Street Art Renaissance</h3>
+                <p class="article-meta">By Anna Martinez</p>
+            </div>
+        </div>
+
+        <!-- Opinion Section -->
+        <div class="opinion-section">
+            <div class="opinion-main">
+                <h2 style="font-size: 2rem; margin-bottom: 20px;">Editor's Desk</h2>
+                <p style="font-size: 1.1rem;">"In times of rapid change, journalism must be the lighthouse, not just the mirror."</p>
+                <p style="margin-top: 20px; color: #666;">This week, we reflect on the role of media in shaping public discourse. As technology evolves, our commitment to truth remains constant.</p>
+            </div>
+            <div class="opinion-grid">
+                <div class="opinion-item">
+                    <h3>Climate Action Now</h3>
+                    <p class="article-meta">By Greta Thunberg</p>
+                    <p>We cannot wait any longer. The science is clear, and the time for action is now.</p>
+                </div>
+                <div class="opinion-item">
+                    <h3>Digital Privacy</h3>
+                    <p class="article-meta">By Edward Snowden</p>
+                    <p>Your data is more valuable than oil. It's time to take back control.</p>
+                </div>
+                <div class="opinion-item">
+                    <h3>The Future of Work</h3>
+                    <p class="article-meta">By Andrew Yang</p>
+                    <p>Remote work is here to stay, but are we ready for the social implications?</p>
+                </div>
+                <div class="opinion-item">
+                    <h3>Space Exploration</h3>
+                    <p class="article-meta">By Neil deGrasse Tyson</p>
+                    <p>Why we must continue to reach for the stars, even with Earth's challenges.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="magazine-footer">
+            <div class="footer-section">
+                <h4>Sections</h4>
+                <ul>
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">Opinion</a></li>
+                    <li><a href="#">Arts</a></li>
+                    <li><a href="#">Science</a></li>
+                    <li><a href="#">Sports</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="#">Our Team</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Subscribe</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <ul>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+        </footer>
+
+        <!-- Grid Features Explanation -->
+        <div style="margin-top: 40px; padding: 20px; background: #f5f5f5; border-radius: 5px;">
+            <h3>CSS Grid Features Used:</h3>
+            <ul style="margin-top: 10px; columns: 2;">
+                <li>✓ Asymmetric grid columns (2fr 1fr 1fr 2fr)</li>
+                <li>✓ Grid template areas (implied)</li>
+                <li>✓ Grid line placement (grid-column: span 2)</li>
+                <li>✓ Responsive grid with media queries</li>
+                <li>✓ Nested grids (grid within grid)</li>
+                <li>✓ Grid gap for gutters</li>
+                <li>✓ Auto rows with minmax()</li>
+                <li>✓ Complex overlapping layouts</li>
+                <li>✓ Multi-column responsive design</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

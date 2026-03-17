@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 2: Float-Based Magazine Layout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            background: #fafafa;
+            padding: 20px;
+        }
+
+        .magazine {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .magazine-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px double #333;
+            padding-bottom: 20px;
+        }
+
+        .magazine-header h1 {
+            font-size: 3em;
+            font-family: 'Times New Roman', serif;
+            letter-spacing: 2px;
+        }
+
+        .magazine-header .date {
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Float-based layout */
+        .main-content {
+            float: left;
+            width: 70%;
+            padding-right: 30px;
+        }
+
+        .sidebar {
+            float: left;
+            width: 30%;
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        /* Clearfix */
+        .row::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Multi-column text */
+        .multi-column {
+            column-count: 3;
+            column-gap: 40px;
+            column-rule: 1px solid #ddd;
+            margin: 30px 0;
+        }
+
+        /* Floated images */
+        .float-left {
+            float: left;
+            margin: 0 20px 10px 0;
+            width: 200px;
+            height: auto;
+        }
+
+        .float-right {
+            float: right;
+            margin: 0 0 10px 20px;
+            width: 200px;
+            height: auto;
+        }
+
+        /* Article styling */
+        .article {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .article h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .article-meta {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        /* Sidebar widgets */
+        .widget {
+            margin-bottom: 30px;
+        }
+
+        .widget h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+        }
+
+        .popular-posts {
+            list-style: none;
+        }
+
+        .popular-posts li {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .popular-posts li::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .popular-posts img {
+            float: left;
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+
+        /* Responsive breakpoints */
+        @media (max-width: 992px) {
+            .main-content {
+                width: 60%;
+            }
+            
+            .sidebar {
+                width: 40%;
+            }
+            
+            .multi-column {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content,
+            .sidebar {
+                width: 100%;
+                float: none;
+                padding-right: 0;
+            }
+            
+            .sidebar {
+                margin-top: 30px;
+            }
+            
+            .multi-column {
+                column-count: 1;
+            }
+            
+            .float-left,
+            .float-right {
+                width: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .magazine {
+                padding: 15px;
+            }
+            
+            .magazine-header h1 {
+                font-size: 2em;
+            }
+            
+            .float-left,
+            .float-right {
+                float: none;
+                width: 100%;
+                margin: 0 0 15px 0;
+            }
+        }
+
+        /* Responsive image */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Clearfix utility */
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Float grid system */
+        .float-grid {
+            margin: 30px 0;
+        }
+
+        .grid-item {
+            float: left;
+            width: 33.33%;
+            padding: 15px;
+        }
+
+        .grid-item .card {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .grid-item {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid-item {
+                width: 100%;
+                float: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="magazine">
+        <header class="magazine-header">
+            <h1>THE DAILY CHRONICLE</h1>
+            <p class="date">Volume 42 • Issue 123 • March 17, 2026</p>
+            <p>Today's Weather: Sunny, 72°F • "All the News That's Fit to Print"</p>
+        </header>
+
+        <div class="row">
+            <!-- Main Content -->
+            <div class="main-content">
+                <article class="article">
+                    <h2>Scientists Make Breakthrough in Renewable Energy</h2>
+                    <p class="article-meta">By Jane Smith • March 17, 2026 • 5 min read</p>
+                    
+                    <img src="https://via.placeholder.com/800x400" alt="Solar panels" class="float-left">
+                    
+                    <p>Researchers have announced a major breakthrough in solar panel efficiency, potentially doubling the energy output of current technology. The new method uses perovskite materials that can be printed like newspaper, making solar cells cheaper and more flexible.</p>
+                    
+                    <p>Dr. Michael Chen, lead researcher at the Institute of Sustainable Energy, explains: "This could revolutionize how we think about solar power. Imagine solar cells integrated into building materials, vehicles, and even clothing." The team published their findings in the journal Nature Energy this week.</p>
+                    
+                    <img src="https://via.placeholder.com/400x300" alt="Research lab" class="float-right">
+                    
+                    <p>The technology is still in the experimental stage, but early results are promising. The new cells achieved 29.5% efficiency in laboratory tests, compared to the current average of 22% for commercial silicon panels. However, challenges remain in scaling up production and ensuring long-term stability.</p>
+                    
+                    <p>Industry experts are optimistic. Solar power currently accounts for about 3% of global electricity generation, but the International Energy Agency predicts it could reach 25% by 2050 if costs continue to fall. This breakthrough could accelerate that timeline significantly.</p>
+                </article>
+
+                <!-- Multi-column text section -->
+                <div class="multi-column">
+                    <h3>In This Issue</h3>
+                    <p>The rapid advancement of artificial intelligence continues to reshape industries worldwide. From healthcare diagnostics to autonomous vehicles, AI systems are becoming increasingly sophisticated. However, concerns about job displacement and ethical implications persist.</p>
+                    
+                    <p>Meanwhile, global climate talks concluded in Geneva with nations agreeing to accelerate the transition away from fossil fuels. The agreement, while non-binding, sets ambitious targets for emissions reductions and renewable energy adoption.</p>
+                    
+                    <p>In local news, the city council approved funding for a new public library and community center in the downtown area. The project is expected to create 200 jobs and provide much-needed services to residents.</p>
+                </div>
+
+                <!-- Float grid system -->
+                <div class="float-grid clearfix">
+                    <h3>More Stories</h3>
+                    <div class="grid-item">
+                        <div class="card">
+                            <h4>Sports</h4>
+                            <p>Local team wins championship in dramatic fashion...</p>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <div class="card">
+                            <h4>Business</h4>
+                            <p>Stock market reaches all-time high on tech gains...</p>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <div class="card">
+                            <h4>Entertainment</h4>
+                            <p>Award-winning film breaks box office records...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="widget">
+                    <h3>About Us</h3>
+                    <p>Founded in 1984, The Daily Chronicle has been serving the community with unbiased, fact-based journalism for over four decades.</p>
+                </div>
+
+                <div class="widget">
+                    <h3>Popular Posts</h3>
+                    <ul class="popular-posts">
+                        <li class="clearfix">
+                            <img src="https://via.placeholder.com/60x60" alt="Post thumbnail">
+                            <a href="#">10 Ways to Reduce Your Carbon Footprint</a>
+                        </li>
+                        <li class="clearfix">
+                            <img src="https://via.placeholder.com/60x60" alt="Post thumbnail">
+                            <a href="#">The Future of Remote Work</a>
+                        </li>
+                        <li class="clearfix">
+                            <img src="https://via.placeholder.com/60x60" alt="Post thumbnail">
+                            <a href="#">Understanding Cryptocurrency</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="widget">
+                    <h3>Advertisement</h3>
+                    <img src="https://via.placeholder.com/300x250" alt="Advertisement" style="width: 100%;">
+                </div>
+
+                <div class="widget">
+                    <h3>Subscribe</h3>
+                    <p>Get the latest news delivered to your inbox.</p>
+                    <form onsubmit="event.preventDefault()">
+                        <input type="email" placeholder="Your email" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+                        <button type="submit" style="width: 100%; padding: 8px; background: #333; color: white; border: none; cursor: pointer;">Subscribe</button>
+                    </form>
+                </div>
+
+                <div class="widget">
+                    <h3>Weather</h3>
+                    <p>Today: Sunny, 72°F<br>
+                       Tomorrow: Partly Cloudy, 68°F<br>
+                       Weekend: Rain expected</p>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Footer -->
+        <footer style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #333; text-align: center; clear: both;">
+            <p>&copy; 2026 The Daily Chronicle. All rights reserved.</p>
+            <p>Terms of Service | Privacy Policy | Contact Us</p>
+        </footer>
+    </div>
+</body>
+</html>

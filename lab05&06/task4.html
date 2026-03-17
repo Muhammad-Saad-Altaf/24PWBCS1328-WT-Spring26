@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 4: Flexbox Navigation System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+
+        .demo-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        /* Horizontal Navigation */
+        .horizontal-nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #333 !important;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background: #f5f5f5;
+        }
+
+        /* Vertical Sidebar Navigation */
+        .sidebar-nav {
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem;
+        }
+
+        .vertical-menu {
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+            gap: 0.5rem;
+        }
+
+        .vertical-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: #f8f9fa;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .vertical-menu a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* Mega Menu */
+        .mega-menu {
+            position: relative;
+        }
+
+        .mega-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 2rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+        }
+
+        .mega-menu:hover .mega-content {
+            display: block;
+        }
+
+        .mega-grid {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .mega-column {
+            flex: 1;
+        }
+
+        .mega-column h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .mega-column a {
+            display: block;
+            padding: 0.5rem 0;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .mega-column a:hover {
+            color: #667eea;
+        }
+
+        /* Hamburger Menu (Mobile) */
+        .hamburger-checkbox {
+            display: none;
+        }
+
+        .hamburger-label {
+            display: none;
+            flex-direction: column;
+            width: 30px;
+            cursor: pointer;
+        }
+
+        .hamburger-label span {
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger-label {
+                display: flex;
+            }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                padding: 1rem;
+                z-index: 1000;
+            }
+
+            .hamburger-checkbox:checked ~ .nav-menu {
+                display: flex;
+            }
+
+            .dropdown-content,
+            .mega-content {
+                position: static;
+                box-shadow: none;
+                padding: 0 0 0 1rem;
+                background: rgba(255,255,255,0.1);
+            }
+
+            .dropdown-content a {
+                color: white !important;
+                border-bottom-color: rgba(255,255,255,0.2);
+            }
+
+            .mega-grid {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .mega-column a {
+                color: white;
+            }
+
+            /* Animation for hamburger */
+            .hamburger-checkbox:checked + .hamburger-label span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .hamburger-checkbox:checked + .hamburger-label span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger-checkbox:checked + .hamburger-label span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            width: 200px;
+        }
+
+        .search-button {
+            padding: 0.5rem 1rem;
+            background: #4ecdc4;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            color: white;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .search-container {
+                margin: 1rem 0 0;
+                width: 100%;
+            }
+
+            .search-input {
+                flex: 1;
+            }
+        }
+
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            display: flex;
+            list-style: none;
+            padding: 1rem 0;
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: '/';
+            margin: 0 0.5rem;
+            color: #999;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            border-bottom: 2px solid #ddd;
+            margin-top: 1rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            color: #666;
+        }
+
+        .tab.active {
+            color: #667eea;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <h1>Flexbox Navigation System</h1>
+
+    <!-- Horizontal Navigation with Dropdown -->
+    <div class="demo-section">
+        <h2>1. Horizontal Navigation with Dropdown</h2>
+        <nav class="horizontal-nav">
+            <input type="checkbox" id="hamburger" class="hamburger-checkbox">
+            <label for="hamburger" class="hamburger-label">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            
+            <ul class="nav-menu">
+                <li><a href="#">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Products ▼</a>
+                    <div class="dropdown-content">
+                        <a href="#">Electronics</a>
+                        <a href="#">Clothing</a>
+                        <a href="#">Books</a>
+                        <a href="#">Home & Garden</a>
+                    </div>
+                </li>
+                <li class="mega-menu">
+                    <a href="#">Services ▼</a>
+                    <div class="mega-content">
+                        <div class="mega-grid">
+                            <div class="mega-column">
+                                <h4>Development</h4>
+                                <a href="#">Web Development</a>
+                                <a href="#">Mobile Apps</a>
+                                <a href="#">Desktop Software</a>
+                            </div>
+                            <div class="mega-column">
+                                <h4>Design</h4>
+                                <a href="#">UI/UX Design</a>
+                                <a href="#">Graphic Design</a>
+                                <a href="#">Branding</a>
+                            </div>
+                            <div class="mega-column">
+                                <h4>Marketing</h4>
+                                <a href="#">SEO</a>
+                                <a href="#">Social Media</a>
+                                <a href="#">Content Creation</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li class="search-container">
+                    <input type="text" class="search-input" placeholder="Search...">
+                    <button class="search-button">🔍</button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Vertical Sidebar Navigation -->
+    <div class="demo-section" style="display: flex; gap: 20px;">
+        <div style="flex: 0 0 250px;">
+            <h2>2. Vertical Sidebar Navigation</h2>
+            <nav class="sidebar-nav">
+                <ul class="vertical-menu">
+                    <li><a href="#">🏠 Dashboard</a></li>
+                    <li><a href="#">👤 Profile</a></li>
+                    <li><a href="#">📧 Messages</a></li>
+                    <li><a href="#">⚙️ Settings</a></li>
+                    <li><a href="#">📊 Analytics</a></li>
+                    <li><a href="#">🚪 Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- Breadcrumb and Tab Navigation -->
+        <div style="flex: 1;">
+            <h2>3. Breadcrumb & Tab Navigation</h2>
+            <ul class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Products</a></li>
+                <li>Electronics</li>
+            </ul>
+            
+            <div class="tab-nav">
+                <button class="tab active">Overview</button>
+                <button class="tab">Details</button>
+                <button class="tab">Reviews</button>
+                <button class="tab">Support</button>
+            </div>
+            
+            <div style="padding: 20px; background: #f8f9fa; border-radius: 0 0 5px 5px;">
+                <p>Tab content goes here. The tabs are created with flexbox for even spacing.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Navigation -->
+    <div class="demo-section">
+        <h2>4. Footer Navigation</h2>
+        <footer style="background: #333; color: white; padding: 2rem; border-radius: 5px;">
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between;">
+                <div>
+                    <h4 style="color: #667eea;">Company</h4>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem;">
+                        <li><a href="#" style="color: white; text-decoration: none;">About Us</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Careers</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Press</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: #667eea;">Resources</h4>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem;">
+                        <li><a href="#" style="color: white; text-decoration: none;">Blog</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Help Center</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Documentation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: #667eea;">Legal</h4>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem;">
+                        <li><a href="#" style="color: white; text-decoration: none;">Privacy</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Terms</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Security</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: #667eea;">Follow Us</h4>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#" style="color: white; text-decoration: none;">📘</a>
+                        <a href="#" style="color: white; text-decoration: none;">🐦</a>
+                        <a href="#" style="color: white; text-decoration: none;">📷</a>
+                        <a href="#" style="color: white; text-decoration: none;">💼</a>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #555;">
+                <p>&copy; 2026 Flexbox Navigation Demo. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

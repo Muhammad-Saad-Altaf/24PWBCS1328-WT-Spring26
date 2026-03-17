@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 1: Display Property Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        h2 {
+            margin: 30px 0 15px;
+            color: #444;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+        }
+
+        .demo-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Block vs Inline vs Inline-block Demo */
+        .block-demo .block-item {
+            display: block;
+            background: #ff6b6b;
+            color: white;
+            padding: 10px;
+            margin: 5px 0;
+            width: 300px;
+        }
+
+        .block-demo .inline-item {
+            display: inline;
+            background: #4ecdc4;
+            color: white;
+            padding: 10px;
+            margin: 10px;
+            width: 200px; /* Won't work with inline */
+        }
+
+        .block-demo .inline-block-item {
+            display: inline-block;
+            background: #45b7d1;
+            color: white;
+            padding: 10px;
+            margin: 10px;
+            width: 150px;
+            height: 80px;
+        }
+
+        /* Table display without table markup */
+        .table-demo {
+            margin: 20px 0;
+        }
+
+        .table {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-row {
+            display: table-row;
+        }
+
+        .table-cell {
+            display: table-cell;
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        .table-header .table-cell {
+            background: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Hidden elements demonstration */
+        .hidden-demo {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .demo-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .hidden-display-none {
+            display: none;
+        }
+
+        .hidden-visibility-hidden {
+            visibility: hidden;
+        }
+
+        .hidden-opacity-0 {
+            opacity: 0;
+        }
+
+        /* Responsive display changes */
+        @media (max-width: 768px) {
+            .block-demo .block-item {
+                width: 100%;
+            }
+            
+            .table, .table-row, .table-cell {
+                display: block;
+            }
+            
+            .table-cell {
+                border: none;
+                position: relative;
+                padding-left: 50%;
+            }
+            
+            .table-cell::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                width: 45%;
+                font-weight: bold;
+            }
+            
+            .table-header {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hidden-demo {
+                flex-direction: column;
+            }
+            
+            .mobile-hidden {
+                display: none;
+            }
+        }
+
+        /* Tablet-specific display */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .block-demo .inline-block-item {
+                width: calc(33.33% - 20px);
+            }
+        }
+
+        /* Visual indicators for responsive changes */
+        .responsive-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
+        .responsive-indicator::before {
+            content: "Mobile ( < 768px)";
+        }
+
+        @media (min-width: 768px) {
+            .responsive-indicator::before {
+                content: "Tablet (768px - 1024px)";
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .responsive-indicator::before {
+                content: "Desktop ( > 1024px)";
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Display Property Showcase</h1>
+        
+        <!-- Block vs Inline vs Inline-block -->
+        <div class="demo-section">
+            <h2>1. Block vs Inline vs Inline-block</h2>
+            <div class="block-demo">
+                <h3>Block Elements (width respected, line breaks)</h3>
+                <div class="block-item">Block 1 - width 300px</div>
+                <div class="block-item">Block 2 - width 300px</div>
+                
+                <h3>Inline Elements (width ignored, no line breaks)</h3>
+                <span class="inline-item">Inline 1</span>
+                <span class="inline-item">Inline 2</span>
+                <span class="inline-item">Inline 3</span>
+                
+                <h3>Inline-block Elements (best of both worlds)</h3>
+                <div class="inline-block-item">Inline-block 1</div>
+                <div class="inline-block-item">Inline-block 2</div>
+                <div class="inline-block-item">Inline-block 3</div>
+            </div>
+        </div>
+        
+        <!-- Table display without table markup -->
+        <div class="demo-section">
+            <h2>2. Table Display (without &lt;table&gt; markup)</h2>
+            <div class="table-demo">
+                <div class="table">
+                    <div class="table-row table-header">
+                        <div class="table-cell">Name</div>
+                        <div class="table-cell">Age</div>
+                        <div class="table-cell">City</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell" data-label="Name">John Doe</div>
+                        <div class="table-cell" data-label="Age">25</div>
+                        <div class="table-cell" data-label="City">New York</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell" data-label="Name">Jane Smith</div>
+                        <div class="table-cell" data-label="Age">30</div>
+                        <div class="table-cell" data-label="City">Los Angeles</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hidden elements demonstration -->
+        <div class="demo-section">
+            <h2>3. Hidden Elements Comparison</h2>
+            <div class="hidden-demo">
+                <div class="demo-box">
+                    <h3>display: none</h3>
+                    <p>Element completely removed from document flow</p>
+                    <button onclick="this.nextElementSibling.classList.toggle('hidden-display-none')">
+                        Toggle Hidden
+                    </button>
+                    <div class="hidden-display-none" style="background: #ff6b6b; padding: 10px; margin-top: 10px;">
+                        This element uses display: none
+                    </div>
+                </div>
+                
+                <div class="demo-box">
+                    <h3>visibility: hidden</h3>
+                    <p>Element hidden but space preserved</p>
+                    <button onclick="this.nextElementSibling.classList.toggle('hidden-visibility-hidden')">
+                        Toggle Hidden
+                    </button>
+                    <div class="hidden-visibility-hidden" style="background: #4ecdc4; padding: 10px; margin-top: 10px;">
+                        This element uses visibility: hidden
+                    </div>
+                </div>
+                
+                <div class="demo-box">
+                    <h3>opacity: 0</h3>
+                    <p>Element invisible but interactive</p>
+                    <button onclick="this.nextElementSibling.classList.toggle('hidden-opacity-0')">
+                        Toggle Hidden
+                    </button>
+                    <div class="hidden-opacity-0" style="background: #45b7d1; padding: 10px; margin-top: 10px;">
+                        This element uses opacity: 0
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Responsive display changes -->
+        <div class="demo-section">
+            <h2>4. Responsive Display Changes</h2>
+            <p>Resize the browser to see how elements adapt:</p>
+            <ul>
+                <li>On mobile: Block items become full width</li>
+                <li>On tablet: Inline-block items arrange in 3 columns</li>
+                <li>On mobile: Table converts to card layout</li>
+                <li class="mobile-hidden">On mobile: This text is hidden</li>
+            </ul>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <div class="mobile-hidden" style="background: #007bff; color: white; padding: 10px;">
+                    Hidden on mobile
+                </div>
+                <div style="background: #28a745; color: white; padding: 10px;">
+                    Always visible
+                </div>
+                <div class="tablet-only" style="background: #ffc107; color: black; padding: 10px;">
+                    Tablet only (768px-1024px)
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="responsive-indicator"></div>
+    
+    <style>
+        .tablet-only {
+            display: none;
+        }
+        
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .tablet-only {
+                display: block;
+            }
+        }
+    </style>
+</body>
+</html>

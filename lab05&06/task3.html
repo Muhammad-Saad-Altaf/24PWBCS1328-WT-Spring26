@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 3: Positioning Challenge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f0f2f5;
+            min-height: 200vh;
+        }
+
+        /* Fixed Header */
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .fixed-header h1 {
+            font-size: 1.5rem;
+        }
+
+        /* Sticky Sidebar */
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 80px auto 20px;
+            padding: 0 20px;
+            gap: 20px;
+        }
+
+        .sidebar {
+            flex: 0 0 250px;
+        }
+
+        .sticky-sidebar {
+            position: sticky;
+            top: 80px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+        }
+
+        .content-section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Absolute positioning examples */
+        .absolute-box {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .ribbon {
+            position: absolute;
+            top: 20px;
+            left: -5px;
+            background: #4ecdc4;
+            color: white;
+            padding: 5px 15px;
+            font-size: 0.8rem;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .ribbon::before {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #2c7a74 transparent transparent #2c7a74;
+        }
+
+        /* Modal Dialog */
+        .modal-trigger {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            position: relative;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        /* Tooltip example */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+            margin: 20px 0;
+        }
+
+        .tooltip-trigger {
+            color: #667eea;
+            text-decoration: underline;
+            cursor: help;
+        }
+
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            display: none;
+            z-index: 10;
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+
+        .tooltip-container:hover .tooltip {
+            display: block;
+        }
+
+        /* Z-index layering demonstration */
+        .z-index-demo {
+            position: relative;
+            height: 200px;
+            margin: 40px 0;
+        }
+
+        .layer {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .layer-1 {
+            background: #ff6b6b;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .layer-2 {
+            background: #4ecdc4;
+            top: 50px;
+            left: 50px;
+            z-index: 3;
+        }
+
+        .layer-3 {
+            background: #45b7d1;
+            top: 100px;
+            left: 100px;
+            z-index: 2;
+        }
+
+        .layer-4 {
+            background: #96ceb4;
+            top: 150px;
+            left: 150px;
+            z-index: 4;
+        }
+
+        /* Responsive behavior */
+        @media (max-width: 768px) {
+            .fixed-header {
+                position: static;
+                padding: 1rem;
+            }
+
+            .container {
+                flex-direction: column;
+                margin-top: 20px;
+            }
+
+            .sidebar {
+                flex: auto;
+            }
+
+            .sticky-sidebar {
+                position: static;
+            }
+
+            .sidebar-item {
+                display: inline-block;
+                width: calc(50% - 5px);
+                margin-right: 5px;
+            }
+
+            .modal {
+                width: 100%;
+                height: 100%;
+                max-width: none;
+                border-radius: 0;
+                animation: none;
+            }
+
+            .modal-overlay {
+                align-items: stretch;
+            }
+
+            .layer {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin-bottom: 10px;
+            }
+
+            .z-index-demo {
+                height: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-item {
+                width: 100%;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="fixed-header">
+        <h1>Positioning Challenge Demo</h1>
+        <p>Fixed Header - Becomes static on mobile (resize to see)</p>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sticky-sidebar">
+                <h3>Sticky Sidebar</h3>
+                <p>This sidebar sticks while scrolling on desktop, stacks on mobile.</p>
+                <div class="sidebar-item">Home</div>
+                <div class="sidebar-item">About</div>
+                <div class="sidebar-item">Services</div>
+                <div class="sidebar-item">Portfolio</div>
+                <div class="sidebar-item">Contact</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <!-- Section with absolute positioning examples -->
+            <section class="content-section">
+                <div class="ribbon">NEW</div>
+                <div class="absolute-box">HOT</div>
+                <h2>Absolute Positioning Examples</h2>
+                <p>Notice the "NEW" ribbon on the left and "HOT" badge on the right - both absolutely positioned within this section.</p>
+                
+                <!-- Tooltip example -->
+                <div class="tooltip-container">
+                    <span class="tooltip-trigger">Hover over me for a tooltip</span>
+                    <div class="tooltip">This is a tooltip!</div>
+                </div>
+            </section>
+
+            <!-- Modal Dialog Section -->
+            <section class="content-section">
+                <h2>Modal Dialog Example</h2>
+                <p>Click the button below to open a modal. On mobile, it becomes full-screen.</p>
+                <button class="modal-trigger" onclick="document.querySelector('.modal-overlay').style.display='flex'">
+                    Open Modal
+                </button>
+            </section>
+
+            <!-- Z-index Layering -->
+            <section class="content-section">
+                <h2>Z-index Layering Demonstration</h2>
+                <p>Boxes are layered using z-index. Layer 2 (teal) appears on top despite being in middle.</p>
+                <div class="z-index-demo">
+                    <div class="layer layer-1">Layer 1 (z-index: 1)</div>
+                    <div class="layer layer-2">Layer 2 (z-index: 3)</div>
+                    <div class="layer layer-3">Layer 3 (z-index: 2)</div>
+                    <div class="layer layer-4">Layer 4 (z-index: 4)</div>
+                </div>
+            </section>
+
+            <!-- More content to enable scrolling -->
+            <section class="content-section">
+                <h2>Additional Content</h2>
+                <p>Scroll down to see the sticky sidebar in action!</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
+        <div class="modal">
+            <button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button>
+            <h2>Modal Dialog</h2>
+            <p>This is an absolutely positioned modal dialog.</p>
+            <p>On mobile devices, it becomes full-screen for better usability.</p>
+            <button onclick="this.closest('.modal-overlay').style.display='none'" style="padding: 8px 16px; background: #667eea; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                Close
+            </button>
+        </div>
+    </div>
+</body>
+</html>

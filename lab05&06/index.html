@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Layout Techniques - Lab 05 & 06</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        h2 {
+            color: #333;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .task-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .task-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .task-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            align-self: flex-start;
+        }
+        
+        .task-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            color: #333;
+        }
+        
+        .task-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            font-size: 0.9rem;
+        }
+        
+        .task-links {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a67d8;
+        }
+        
+        .btn-outline {
+            border: 1px solid #667eea;
+            color: #667eea;
+        }
+        
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            h1 { font-size: 2rem; }
+            .task-grid { gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 CSS Layout Techniques & Responsive Design</h1>
+        <h2 style="color: white; border-bottom-color: white;">Lab 05 & 06 - All Tasks</h2>
+        
+        <div class="task-grid">
+            <!-- Part A: Display Property -->
+            <div class="task-card">
+                <span class="task-number">Task 1</span>
+                <div class="task-title">Display Property Showcase</div>
+                <div class="task-description">Block vs inline vs inline-block, table display, responsive changes, hidden elements</div>
+                <div class="task-links">
+                    <a href="task1-display.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code1" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 2: Float Magazine -->
+            <div class="task-card">
+                <span class="task-number">Task 2</span>
+                <div class="task-title">Float-Based Magazine Layout</div>
+                <div class="task-description">Multi-column text, wrapped images, responsive sidebar using only floats</div>
+                <div class="task-links">
+                    <a href="task2-float-magazine.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code2" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 3: Positioning Challenge -->
+            <div class="task-card">
+                <span class="task-number">Task 3</span>
+                <div class="task-title">Positioning Challenge</div>
+                <div class="task-description">Fixed header, modal dialog, sticky sidebar, z-index layering</div>
+                <div class="task-links">
+                    <a href="task3-positioning.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code3" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 4: Flexbox Navigation -->
+            <div class="task-card">
+                <span class="task-number">Task 4</span>
+                <div class="task-title">Flexbox Navigation System</div>
+                <div class="task-description">Horizontal nav, hamburger menu, dropdowns, responsive animations</div>
+                <div class="task-links">
+                    <a href="task4-flexbox-nav.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code4" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 5: Flexbox Card Layout -->
+            <div class="task-card">
+                <span class="task-number">Task 5</span>
+                <div class="task-title">Flexbox Card Layout</div>
+                <div class="task-description">Equal height cards, responsive arrangement, flexible content</div>
+                <div class="task-links">
+                    <a href="task5-flexbox-cards.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code5" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 6: CSS Grid Photo Gallery -->
+            <div class="task-card">
+                <span class="task-number">Task 6</span>
+                <div class="task-title">CSS Grid Photo Gallery</div>
+                <div class="task-description">Masonry-style layout, responsive tracks, hover effects</div>
+                <div class="task-links">
+                    <a href="task6-grid-gallery.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code6" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 7: Holy Grail Layout -->
+            <div class="task-card">
+                <span class="task-number">Task 7</span>
+                <div class="task-title">Holy Grail Layout</div>
+                <div class="task-description">Float, Flexbox, and Grid implementations with comparison</div>
+                <div class="task-links">
+                    <a href="task7-holy-grail.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code7" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 8: E-commerce Product Grid -->
+            <div class="task-card">
+                <span class="task-number">Task 8</span>
+                <div class="task-title">E-commerce Product Grid</div>
+                <div class="task-description">Responsive product cards, off-canvas filter, grid template areas</div>
+                <div class="task-links">
+                    <a href="task8-ecommerce-grid.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code8" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 9: Dashboard Layout -->
+            <div class="task-card">
+                <span class="task-number">Task 9</span>
+                <div class="task-title">Dashboard Layout</div>
+                <div class="task-description">Grid + Flexbox combination, collapsible sidebar, stat cards</div>
+                <div class="task-links">
+                    <a href="task9-dashboard.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code9" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 10: Media Query Demonstration -->
+            <div class="task-card">
+                <span class="task-number">Task 10</span>
+                <div class="task-title">Media Query Demo</div>
+                <div class="task-description">Breakpoint indicators, layout changes, typography scaling</div>
+                <div class="task-links">
+                    <a href="task10-media-query-demo.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code10" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 11: Magazine Grid -->
+            <div class="task-card">
+                <span class="task-number">Task 11</span>
+                <div class="task-title">CSS Grid Magazine</div>
+                <div class="task-description">Asymmetric columns, responsive typography, complex grid</div>
+                <div class="task-links">
+                    <a href="task11-magazine-grid.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code11" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 12: Flexbox Form Builder -->
+            <div class="task-card">
+                <span class="task-number">Task 12</span>
+                <div class="task-title">Flexbox Form Builder</div>
+                <div class="task-description">Responsive form sections, conditional layouts, multi-column</div>
+                <div class="task-links">
+                    <a href="task12-flexbox-form.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code12" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 13: Portfolio Layout -->
+            <div class="task-card">
+                <span class="task-number">Task 13</span>
+                <div class="task-title">Portfolio Mixed Techniques</div>
+                <div class="task-description">Grid + Flexbox + Positioning, masonry galleries</div>
+                <div class="task-links">
+                    <a href="task13-portfolio.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code13" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 14: Responsive Data Table -->
+            <div class="task-card">
+                <span class="task-number">Task 14</span>
+                <div class="task-title">Responsive Data Table</div>
+                <div class="task-description">Table to cards to stacked, accessibility focused</div>
+                <div class="task-links">
+                    <a href="task14-responsive-table.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code14" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 15: Mobile-First Landing Page -->
+            <div class="task-card">
+                <span class="task-number">Task 15</span>
+                <div class="task-title">Mobile-First Landing Page</div>
+                <div class="task-description">Progressive enhancement, responsive images, performance</div>
+                <div class="task-links">
+                    <a href="task15-landing-page.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code15" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 16: Common Breakpoints -->
+            <div class="task-card">
+                <span class="task-number">Task 16</span>
+                <div class="task-title">Common Breakpoints</div>
+                <div class="task-description">Mobile-first approach with standard breakpoints</div>
+                <div class="task-links">
+                    <a href="task16-breakpoints.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code16" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 17: Utility Classes -->
+            <div class="task-card">
+                <span class="task-number">Task 17</span>
+                <div class="task-title">Responsive Utility Classes</div>
+                <div class="task-description">Show/hide, spacing, text alignment, flex utilities</div>
+                <div class="task-links">
+                    <a href="task17-utility-classes.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code17" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+            
+            <!-- Task 18: Dark Mode -->
+            <div class="task-card">
+                <span class="task-number">Task 18</span>
+                <div class="task-title">Dark Mode & Preference Queries</div>
+                <div class="task-description">Dark/light theme, reduced motion, high contrast, print</div>
+                <div class="task-links">
+                    <a href="task18-dark-mode.html" class="btn btn-primary">View Demo</a>
+                    <a href="#code18" class="btn btn-outline">Code</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

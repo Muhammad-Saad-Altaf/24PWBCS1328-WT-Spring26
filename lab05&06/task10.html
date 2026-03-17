@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 10: Media Query Demonstration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f0f2f5;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        /* Breakpoint Indicator */
+        .breakpoint-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .breakpoint-indicator::before {
+            content: "Current: ";
+        }
+
+        /* Base styles (Mobile First) */
+        .breakpoint-indicator::after {
+            content: "Mobile (< 768px)";
+        }
+
+        /* Demo Sections */
+        .demo-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #444;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        /* Layout Change Demo */
+        .layout-demo {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: 1fr;
+        }
+
+        .layout-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        /* Typography Scaling */
+        .typography-demo {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .typography-demo h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            transition: font-size 0.3s ease;
+        }
+
+        .typography-demo p {
+            font-size: 1rem;
+            color: #666;
+            transition: font-size 0.3s ease;
+        }
+
+        /* Navigation Pattern Changes */
+        .nav-demo {
+            background: #333;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            flex: 1;
+            text-align: center;
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 15px;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .nav-menu a:hover {
+            background: #667eea;
+        }
+
+        /* Color Scheme Changes */
+        .color-demo {
+            padding: 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* Orientation Demo */
+        .orientation-demo {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .orientation-box {
+            flex: 1;
+            min-width: 200px;
+            height: 150px;
+            background: #4ecdc4;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+        }
+
+        /* Responsive Grid Demo */
+        .responsive-grid {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        .grid-item {
+            background: #45b7d1;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        /* Breakpoint Information Table */
+        .breakpoint-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .breakpoint-table th,
+        .breakpoint-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .breakpoint-table th {
+            background: #333;
+            color: white;
+        }
+
+        .breakpoint-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .current-breakpoint {
+            background: #ff6b6b !important;
+            color: white;
+        }
+
+        /* ========== MEDIA QUERIES ========== */
+
+        /* Tablet (768px and up) */
+        @media (min-width: 768px) {
+            .breakpoint-indicator::after {
+                content: "Tablet (768px - 1024px)";
+            }
+
+            .layout-demo {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .typography-demo h3 {
+                font-size: 2rem;
+            }
+
+            .typography-demo p {
+                font-size: 1.1rem;
+            }
+
+            .responsive-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Desktop (1024px and up) */
+        @media (min-width: 1024px) {
+            .breakpoint-indicator::after {
+                content: "Desktop (1024px - 1200px)";
+            }
+
+            .layout-demo {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .typography-demo h3 {
+                font-size: 2.5rem;
+            }
+
+            .typography-demo p {
+                font-size: 1.2rem;
+            }
+
+            .responsive-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Large Desktop (1200px and up) */
+        @media (min-width: 1200px) {
+            .breakpoint-indicator::after {
+                content: "Large Desktop (1200px - 1400px)";
+            }
+
+            .layout-demo {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .responsive-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Extra Large (1400px and up) */
+        @media (min-width: 1400px) {
+            .breakpoint-indicator::after {
+                content: "Extra Large (1400px+)";
+            }
+
+            .layout-demo {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .typography-demo h3 {
+                font-size: 3rem;
+            }
+
+            .typography-demo p {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Orientation Queries */
+        @media (orientation: landscape) {
+            .orientation-box {
+                background: #ff6b6b;
+            }
+            .orientation-box::before {
+                content: "Landscape Mode";
+            }
+        }
+
+        @media (orientation: portrait) {
+            .orientation-box {
+                background: #4ecdc4;
+            }
+            .orientation-box::before {
+                content: "Portrait Mode";
+            }
+        }
+
+        /* Hover capability */
+        @media (hover: hover) {
+            .hover-demo button:hover {
+                background: #667eea;
+                color: white;
+            }
+        }
+
+        @media (hover: none) {
+            .hover-demo button:active {
+                background: #667eea;
+                color: white;
+            }
+            .hover-demo::before {
+                content: "Touch device - hover not supported";
+                display: block;
+                color: #ff6b6b;
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .breakpoint-indicator,
+            .no-print {
+                display: none;
+            }
+            
+            .demo-section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+            
+            .print-friendly {
+                color: black;
+            }
+        }
+
+        /* Dark mode support (preview) */
+        @media (prefers-color-scheme: dark) {
+            body.dark-mode-preview {
+                background: #1a1a1a;
+                color: #f0f0f0;
+            }
+            
+            .demo-section.dark-mode-preview {
+                background: #2d2d2d;
+                color: #f0f0f0;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* High contrast */
+        @media (prefers-contrast: high) {
+            .high-contrast-demo {
+                border: 2px solid black;
+                background: white;
+                color: black;
+            }
+        }
+
+        /* Custom breakpoint classes for demonstration */
+        .visible-mobile,
+        .visible-tablet,
+        .visible-desktop,
+        .visible-large {
+            display: none;
+        }
+
+        @media (max-width: 767px) {
+            .visible-mobile { display: block; }
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .visible-tablet { display: block; }
+        }
+
+        @media (min-width: 1024px) and (max-width: 1199px) {
+            .visible-desktop { display: block; }
+        }
+
+        @media (min-width: 1200px) {
+            .visible-large { display: block; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Media Query Demonstration</h1>
+
+        <!-- Breakpoint Indicator -->
+        <div class="breakpoint-indicator"></div>
+
+        <!-- Layout Changes Demo -->
+        <div class="demo-section">
+            <h2>1. Layout Changes at Different Breakpoints</h2>
+            <p>This grid changes columns based on screen size:</p>
+            <div class="layout-demo">
+                <div class="layout-item">Item 1</div>
+                <div class="layout-item">Item 2</div>
+                <div class="layout-item">Item 3</div>
+                <div class="layout-item">Item 4</div>
+                <div class="layout-item">Item 5</div>
+                <div class="layout-item">Item 6</div>
+            </div>
+            <ul style="margin-top: 20px;">
+                <li><strong>Mobile:</strong> 1 column</li>
+                <li><strong>Tablet:</strong> 2 columns</li>
+                <li><strong>Desktop:</strong> 3 columns</li>
+                <li><strong>Large Desktop:</strong> 4 columns</li>
+                <li><strong>Extra Large:</strong> 5 columns</li>
+            </ul>
+        </div>
+
+        <!-- Typography Scaling -->
+        <div class="demo-section">
+            <h2>2. Typography Scaling</h2>
+            <div class="typography-demo">
+                <h3>Responsive Typography</h3>
+                <p>This text size changes at different breakpoints. On mobile, headings are 1.5rem. On tablet, they're 2rem. On desktop, they're 2.5rem, and on large screens, they're 3rem. Body text scales proportionally.</p>
+            </div>
+        </div>
+
+        <!-- Navigation Pattern Changes -->
+        <div class="demo-section">
+            <h2>3. Navigation Pattern Changes</h2>
+            <div class="nav-demo">
+                <ul class="nav-menu">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Portfolio</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <p style="margin-top: 20px;">On mobile, this navigation becomes vertical (view source to see the media query). Resize to see the change.</p>
+        </div>
+
+        <!-- Orientation Demo -->
+        <div class="demo-section">
+            <h2>4. Orientation Media Queries</h2>
+            <div class="orientation-demo">
+                <div class="orientation-box"></div>
+            </div>
+            <p><strong>Current orientation:</strong> <span id="orientation"></span></p>
+            <p>Rotate your device or resize browser to see the color change (red for landscape, teal for portrait).</p>
+        </div>
+
+        <!-- Hover Capability Demo -->
+        <div class="demo-section hover-demo">
+            <h2>5. Hover Capability Queries</h2>
+            <button style="padding: 10px 20px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 5px; cursor: pointer; transition: all 0.3s;">
+                Hover over me (if supported)
+            </button>
+        </div>
+
+        <!-- Responsive Grid Demo -->
+        <div class="demo-section">
+            <h2>6. Responsive Grid with auto-fit/minmax</h2>
+            <div class="responsive-grid">
+                <div class="grid-item">Card 1</div>
+                <div class="grid-item">Card 2</div>
+                <div class="grid-item">Card 3</div>
+                <div class="grid-item">Card 4</div>
+                <div class="grid-item">Card 5</div>
+                <div class="grid-item">Card 6</div>
+                <div class="grid-item">Card 7</div>
+                <div class="grid-item">Card 8</div>
+            </div>
+        </div>
+
+        <!-- Visible at Different Breakpoints -->
+        <div class="demo-section">
+            <h2>7. Element Visibility by Breakpoint</h2>
+            <div class="visible-mobile" style="background: #ff6b6b; color: white; padding: 10px; text-align: center; border-radius: 5px;">
+                🔵 Visible only on Mobile
+            </div>
+            <div class="visible-tablet" style="background: #4ecdc4; color: white; padding: 10px; text-align: center; border-radius: 5px;">
+                🟢 Visible only on Tablet
+            </div>
+            <div class="visible-desktop" style="background: #45b7d1; color: white; padding: 10px; text-align: center; border-radius: 5px;">
+                🟣 Visible only on Desktop
+            </div>
+            <div class="visible-large" style="background: #96ceb4; color: white; padding: 10px; text-align: center; border-radius: 5px;">
+                🟤 Visible only on Large Screens
+            </div>
+        </div>
+
+        <!-- Breakpoint Information Table -->
+        <div class="demo-section">
+            <h2>8. Common Breakpoint Reference</h2>
+            <table class="breakpoint-table">
+                <thead>
+                    <tr>
+                        <th>Breakpoint</th>
+                        <th>Width Range</th>
+                        <th>Typical Device</th>
+                        <th>Columns</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="current-breakpoint" id="mobile-row">
+                        <td>Mobile</td>
+                        <td>&lt; 768px</td>
+                        <td>Phones</td>
+                        <td>1</td>
+                    </tr>
+                    <tr id="tablet-row">
+                        <td>Tablet</td>
+                        <td>768px - 1024px</td>
+                        <td>iPads, Tablets</td>
+                        <td>2</td>
+                    </tr>
+                    <tr id="desktop-row">
+                        <td>Desktop</td>
+                        <td>1024px - 1200px</td>
+                        <td>Laptops, Desktops</td>
+                        <td>3</td>
+                    </tr>
+                    <tr id="large-row">
+                        <td>Large Desktop</td>
+                        <td>1200px - 1400px</td>
+                        <td>Large Monitors</td>
+                        <td>4</td>
+                    </tr>
+                    <tr id="xlarge-row">
+                        <td>Extra Large</td>
+                        <td>1400px+</td>
+                        <td>Ultrawide Monitors</td>
+                        <td>5+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Print Styles Demo -->
+        <div class="demo-section">
+            <h2>9. Print Media Query</h2>
+            <p class="print-friendly">This content will be print-friendly. Try printing this page (Ctrl+P) to see the print styles in action.</p>
+            <p class="no-print" style="color: #ff6b6b;">This message will NOT appear when printed (using .no-print class).</p>
+        </div>
+
+        <!-- Media Query Syntax Reference -->
+        <div class="demo-section">
+            <h2>10. Media Query Syntax Examples</h2>
+            <pre style="background: #f5f5f5; padding: 20px; border-radius: 5px; overflow-x: auto;">
+/* Mobile First Approach */
+/* Base styles for mobile */
+
+/* Tablet */
+@media (min-width: 768px) { ... }
+
+/* Desktop */
+@media (min-width: 1024px) { ... }
+
+/* Large Desktop */
+@media (min-width: 1200px) { ... }
+
+/* Orientation */
+@media (orientation: landscape) { ... }
+@media (orientation: portrait) { ... }
+
+/* Device Capabilities */
+@media (hover: hover) { ... }
+@media (pointer: coarse) { ... } /* Touch screen */
+@media (pointer: fine) { ... }   /* Mouse */
+
+/* Print */
+@media print { ... }
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) { ... }
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) { ... }
+
+/* High Contrast */
+@media (prefers-contrast: high) { ... }
+
+/* Aspect Ratio */
+@media (aspect-ratio: 16/9) { ... }
+@media (min-aspect-ratio: 16/9) { ... }
+
+/* Resolution */
+@media (min-resolution: 2dppx) { ... } /* Retina displays */
+            </pre>
+        </div>
+    </div>
+
+    <script>
+        // Update orientation display
+        function updateOrientation() {
+            const orientation = window.screen.orientation.type;
+            document.getElementById('orientation').textContent = orientation;
+        }
+        
+        window.addEventListener('orientationchange', updateOrientation);
+        updateOrientation();
+
+        // Highlight current breakpoint in table
+        function updateBreakpointHighlight() {
+            const width = window.innerWidth;
+            const rows = {
+                mobile: document.getElementById('mobile-row'),
+                tablet: document.getElementById('tablet-row'),
+                desktop: document.getElementById('desktop-row'),
+                large: document.getElementById('large-row'),
+                xlarge: document.getElementById('xlarge-row')
+            };
+
+            // Remove all highlights
+            Object.values(rows).forEach(row => {
+                row.classList.remove('current-breakpoint');
+            });
+
+            // Add highlight based on width
+            if (width < 768) {
+                rows.mobile.classList.add('current-breakpoint');
+            } else if (width < 1024) {
+                rows.tablet.classList.add('current-breakpoint');
+            } else if (width < 1200) {
+                rows.desktop.classList.add('current-breakpoint');
+            } else if (width < 1400) {
+                rows.large.classList.add('current-breakpoint');
+            } else {
+                rows.xlarge.classList.add('current-breakpoint');
+            }
+        }
+
+        window.addEventListener('resize', updateBreakpointHighlight);
+        updateBreakpointHighlight();
+    </script>
+</body>
+</html>

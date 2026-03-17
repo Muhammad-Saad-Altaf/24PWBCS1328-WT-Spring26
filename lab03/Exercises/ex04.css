@@ -1,0 +1,21 @@
+img{
+width:200px;
+margin:20px;
+}
+
+.img1{
+border-radius:20px;
+}
+
+.img2{
+border-radius:50%;
+}
+
+.img3{
+box-shadow:5px 5px 10px gray;
+}
+
+img:hover{
+transform:scale(1.1);
+transition:0.5s;
+}

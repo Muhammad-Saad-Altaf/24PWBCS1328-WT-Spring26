@@ -1,0 +1,27 @@
+.f1{
+font-family:'Roboto';
+}
+
+.f2{
+font-family:'Pacifico';
+}
+
+.f3{
+font-family:'Montserrat';
+}
+
+.center{
+text-align:center;
+}
+
+.right{
+text-align:right;
+}
+
+.shadow{
+text-shadow:2px 2px 5px gray;
+}
+
+p{
+font-size:20px;
+}
